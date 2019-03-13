@@ -20,6 +20,7 @@ public class PauseState : IStateBase
         }
 
         canvas_ref = gameStateMachine.Canvas_Ref;
+        gameStateMachine.BubbleManager_Ref.TurnOff();
       
         if (debugMode)
         {

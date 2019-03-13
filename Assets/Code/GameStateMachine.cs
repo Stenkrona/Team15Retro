@@ -10,6 +10,7 @@ public class GameStateMachine : MonoBehaviour
     public GameObject canvas_Ref;
 
     private IStateBase gameState;
+    private BubbleManager bubbleManager_Ref;
    
     private Text debugTxtReference;
     private string currentState;
@@ -65,6 +66,7 @@ public class GameStateMachine : MonoBehaviour
    
     // properties
     public GameObject Canvas_Ref {get {return canvas_Ref;}}
+    public BubbleManager BubbleManager_Ref { set { bubbleManager_Ref = value; } get { return bubbleManager_Ref; } }
   
    
 

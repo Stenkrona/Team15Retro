@@ -27,7 +27,7 @@ public class PlayState : IStateBase
 
         if (!showMessage)
         {
-        
+            gameStateMachine_ref.BubbleManager_Ref.TurnOn();
         }
 
         if (debugMode)
@@ -68,6 +68,8 @@ public class PlayState : IStateBase
         if (timeBeingActive > 2.0f)
         {
             isDisplayingMessage = false;
+
+            gameStateMachine_ref.BubbleManager_Ref.TurnOn();
 
             if (gameStateMachine_ref.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject != null)
             {
