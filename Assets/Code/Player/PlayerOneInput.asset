@@ -16,4 +16,4 @@ MonoBehaviour:
   downThruster: 353
   leftThurster: 352
   rightThurster: 351
-  horizontalAxis: 
+  horizontalAxis: Joystick1Horizontal
