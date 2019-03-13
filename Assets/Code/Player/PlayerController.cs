@@ -23,22 +23,22 @@ public class PlayerController : MonoBehaviour
     {
         if (gameObject.GetComponent<Rigidbody>())
         {
-        //Up and down thursters
-        if (Input.GetKey(input.upThruster))
-            playerRigidBody.AddRelativeForce(0, thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
-        if (Input.GetKey(input.downThruster))
-            playerRigidBody.AddRelativeForce(0, -thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
-        //Left and right thrusters
-        if (Input.GetKey(input.rightThurster))
-            playerRigidBody.AddRelativeForce(-thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
-        if (Input.GetKey(input.leftThurster))
-            playerRigidBody.AddRelativeForce(thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
+            //Up and down thursters
+            if (Input.GetKey(input.upThruster))
+                playerRigidBody.AddRelativeForce(0, thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
+            if (Input.GetKey(input.downThruster))
+                playerRigidBody.AddRelativeForce(0, -thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
+            //Left and right thrusters
+            if (Input.GetKey(input.rightThurster))
+                playerRigidBody.AddRelativeForce(-thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
+            if (Input.GetKey(input.leftThurster))
+                playerRigidBody.AddRelativeForce(thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
         }
         if (gameObject.GetComponent<Transform>())
         {
-        //Rotation
-        float xAxisValue = Input.GetAxis(input.horizontalAxis);
-        playerTransform.Rotate(new Vector3(0, 0, -xAxisValue * rotateSpeed * Time.deltaTime));
+            //Rotation
+            float xAxisValue = Input.GetAxis(input.horizontalAxis);
+            playerTransform.Rotate(new Vector3(0, 0, -xAxisValue * rotateSpeed * Time.deltaTime));
         }
     }
 }
