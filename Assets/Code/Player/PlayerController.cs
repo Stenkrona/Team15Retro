@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody playerRigidBody;
-    public Transform playerTransform;
+    private Rigidbody playerRigidBody;
+    private Transform playerTransform;
     public float thrusterPower = 100;
     public float rotateSpeed = 100;
     public PlayerInput input;
-  
-    void Update()
+
+
+    private void Start()
+    {
+        if (gameObject.GetComponent<Rigidbody>())
+            playerRigidBody = gameObject.GetComponent<Rigidbody>();
+        if (gameObject.GetComponent<Transform>())
+            playerTransform = gameObject.GetComponent<Transform>();
+    }
+    void FixedUpdate()
     {
         //Up and down thursters
         if (Input.GetKey(input.upThruster))
