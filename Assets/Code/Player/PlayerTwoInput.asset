@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc8eadb171520b4b88fc38a6d119860, type: 3}
   m_Name: PlayerTwoInput
   m_EditorClassIdentifier: 
-  upThruster: 0
-  downThruster: 0
-  leftThurster: 0
-  rightThurster: 0
-  horizontalAxis: 
+  upThruster: 370
+  downThruster: 373
+  leftThurster: 372
+  rightThurster: 371
+  horizontalAxis: Joystick2Horizontal

@@ -9,19 +9,15 @@ public class MainMenuState : IStateBase
     private GameObject canvas_ref;
     private bool debugMode;
     private float timeBeingActive;
-
     public MainMenuState (GameStateMachine gameStateMachine_Ref)
     {
         gameStateMachine = gameStateMachine_Ref;
         debugMode = gameStateMachine.debugMode;
 
-        if(debugMode)
-        {
+           if(debugMode){
             Debug.Log("------------Running MainMenuState Constructor-------------");
         }
-
-        if(gameStateMachine.Canvas_Ref != null)
-        {
+        if(gameStateMachine.Canvas_Ref != null){
             canvas_ref = gameStateMachine.Canvas_Ref;
         }
         else
@@ -29,16 +25,14 @@ public class MainMenuState : IStateBase
             Debug.Log("MainMenuState cannot get a reference to the canvas");
         }
 
-        timeBeingActive = 0;
+            timeBeingActive = 0;
        
-        if(debugMode)
-        {
+        if(debugMode){
             Debug.Log("------------MainMenuState Constructor Done-------------");
         }
     }
 
-    public void StateUpdate()
-    {
+    public void StateUpdate(){
         PlayerInput();
         TimeTracker();
     }
@@ -51,7 +45,6 @@ public class MainMenuState : IStateBase
         {
             gameStateMachine.ChangeState(new PlayState(gameStateMachine, true));
         }
-
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
 
     }
