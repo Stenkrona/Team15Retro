@@ -28,7 +28,7 @@ public class BubbleManager : MonoBehaviour
     public Vector2 p2_RightBottom;
     public Vector2 p2_RightTop;
 
-    private Vector2[] borderVectorsArray;
+    public Vector2[] borderVectorsArray;
 
     private List<GameObject> bubblesOnPlayerOnesSide;
     private List<GameObject> bubblesOnPlayerTwosSide;
@@ -56,7 +56,10 @@ public class BubbleManager : MonoBehaviour
         }
         MakeArrayOfVectors();
 
+        GetBorders();
+        SetVectors();
         CheckBorders();
+      
 
         bubblesOnPlayerOnesSide = new List<GameObject>();
         bubblesOnPlayerTwosSide = new List<GameObject>();
@@ -337,11 +340,35 @@ public class BubbleManager : MonoBehaviour
         
 
     }
+    private void GetBorders()
+    {
+        GameObject borderParent_Ref = gameStateMachine_Ref.bordersParent_Ref;
+
+        int childAmount = borderParent_Ref.transform.childCount;
+
+        
+
+        for (int i = 0; i < childAmount; i++)
+        {
+            Vector2 temp = borderParent_Ref.transform.GetChild(i).transform.position;
+            borderVectorsArray[i] = temp;
+        }
+    }
+    private void SetVectors()
+    {
+        p1_LeftBottom = borderVectorsArray[0];
+        p1_LeftTop = borderVectorsArray[1];
+        p1_RightBottom = borderVectorsArray[2];
+        p1_RightTop = borderVectorsArray[3];
+        p2_LeftBottom = borderVectorsArray[4];
+        p2_LeftTop = borderVectorsArray[5];
+        p2_RightBottom = borderVectorsArray[6];
+        p2_RightTop = borderVectorsArray[7];
+    }
     //properties
     public List<GameObject> BubblesOnPlayerOnesSide
     { get { return bubblesOnPlayerOnesSide; }
         set { bubblesOnPlayerOnesSide = value; }}
-
     public List<GameObject> BubblesOnPlayerTwosSide
     { get { return bubblesOnPlayerTwosSide; }
         set { bubblesOnPlayerTwosSide = value; } }
