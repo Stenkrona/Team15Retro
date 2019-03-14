@@ -9,6 +9,9 @@ public class GameStateMachine : MonoBehaviour
     public bool debugMode;
     public GameObject canvas_Ref;
     public GameObject bordersParent_Ref;
+    public GameObject playerOneParent_Ref;
+    public GameObject playerTwoParent_Ref;
+    
 
     private IStateBase gameState;
     private BubbleManager bubbleManager_Ref;
