@@ -12,8 +12,10 @@ public class Bubble : MonoBehaviour
 
     [HideInInspector] public BubbleManager bubbleManager_Ref;
     [HideInInspector] public float elevationSpeed;
+    [HideInInspector] public GameStateMachine gameStateMachine_Ref;
 
     private bool hasCaughtTetrisBlock;
+    private GameObject myCaugtBlock;
 
     void Start()
     {
@@ -46,8 +48,10 @@ public class Bubble : MonoBehaviour
             {
                 transform.Translate(Vector2.up * Time.deltaTime * elevationSpeed);
 
-                if(transform.position.y >= bubbleManager_Ref.noSpawnUpperBuffer)
+                if(transform.position.y >= 10)
                 {
+                    RemoveMeFromBubbleManagerList();
+                    SetBlockParent();
                     Destroy(gameObject);
                 }
             }
@@ -78,11 +82,30 @@ public class Bubble : MonoBehaviour
             bubbleManager_Ref.BubblesOnPlayerTwosSide.Remove(gameObject);
         }
     }
-    void OnTriggerEnter(Collider coll)
+    void OnTriggerEnter2D(Collider2D coll)
     {
+        Debug.Log("Hit");
+
         if(coll.gameObject.tag == "Player")
         {
+            myCaugtBlock = coll.gameObject;
+
             hasCaughtTetrisBlock = true;
+
+            coll.transform.position = transform.position;
+                
+            coll.transform.SetParent(gameObject.transform);
+        }
+    }
+    private void SetBlockParent()
+    {
+        if (isOnPlayerOneSide)
+        {
+            myCaugtBlock.transform.SetParent(gameStateMachine_Ref.playerOneParent_Ref.transform);
+        }
+        else
+        {
+            myCaugtBlock.transform.SetParent(gameStateMachine_Ref.playerTwoParent_Ref.transform);
         }
     }
 }
