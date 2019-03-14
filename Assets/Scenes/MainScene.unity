@@ -2501,14 +2501,15 @@ MonoBehaviour:
   bubblesParent: {fileID: 1449976634}
   maxBubblesInPlay: 2
   minLengthTweenYValues: 0
-  p1_LeftBottom: {x: -20, y: 0}
-  p1_LeftTop: {x: -20, y: 10}
-  p1_RightBottom: {x: -5, y: 0}
-  p1_RightTop: {x: -5, y: 10}
-  p2_LeftBottom: {x: 5, y: 0}
-  p2_LeftTop: {x: 5, y: 10}
-  p2_RightBottom: {x: 20, y: 0}
-  p2_RightTop: {x: 20, y: 10}
+  p1_LeftBottom: {x: 0, y: 0}
+  p1_LeftTop: {x: 0, y: 0}
+  p1_RightBottom: {x: 0, y: 0}
+  p1_RightTop: {x: 0, y: 0}
+  p2_LeftBottom: {x: 0, y: 0}
+  p2_LeftTop: {x: 0, y: 0}
+  p2_RightBottom: {x: 0, y: 0}
+  p2_RightTop: {x: 0, y: 0}
+  borderVectorsArray: []
 --- !u!1 &2135770794
 GameObject:
   m_ObjectHideFlags: 0
