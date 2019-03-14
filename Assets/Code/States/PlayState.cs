@@ -34,11 +34,11 @@ public class PlayState : IStateBase
         }
     }
 
-    public void StateUpdate(){
+    public void StateUpdate()
+    {
         TimeTracker();
 
         if(!isDisplayingMessage) PlayerInput();
-
       
     }
     public void ShowIt(){
