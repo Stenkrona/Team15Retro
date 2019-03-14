@@ -24,7 +24,7 @@ public class PlayState : IStateBase
         isDisplayingMessage = showMessage;
         if (!showMessage)
         {
-            gameStateMachine_ref.BubbleManager_Ref.TurnOn();
+            gameStateMachine.BubbleManager_Ref.TurnOn();
         }
         if (debugMode)
         {
@@ -60,11 +60,11 @@ public class PlayState : IStateBase
         {
             isDisplayingMessage = false;
 
-            gameStateMachine_ref.BubbleManager_Ref.TurnOn();
+            gameStateMachine.BubbleManager_Ref.TurnOn();
 
-            if (gameStateMachine_ref.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject != null)
+            if (gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject != null)
             {
-                gameStateMachine_ref.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
+                gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
             }
            
             Debug.Log("PlayState has shown its message!");
