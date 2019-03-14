@@ -176,6 +176,7 @@ public class BubbleManager : MonoBehaviour
             if (isSpawningRightSide) tempBubble_Ref.isMovingLeft = true;
             tempBubble_Ref.myDeSpawnValue = deSpawnZone;
             tempBubble_Ref.bubbleManager_Ref = this;
+            tempBubble_Ref.gameStateMachine_Ref = gameStateMachine_Ref;
 
             if (playerOneSide)
             {
