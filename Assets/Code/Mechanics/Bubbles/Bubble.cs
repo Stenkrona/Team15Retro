@@ -21,6 +21,7 @@ public class Bubble : MonoBehaviour
     {
         if (movementSpeed == 0) movementSpeed = 5;
         if (elevationSpeed == 0) elevationSpeed = 3;
+        if (gameStateMachine_Ref == null) gameStateMachine_Ref = GameStateMachine.GetInstance();
     }
 
     void Update()

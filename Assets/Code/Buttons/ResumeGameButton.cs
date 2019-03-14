@@ -8,7 +8,7 @@ public class ResumeGameButton : MonoBehaviour
 
     void Start()
     {
-        gameStateMachine_Ref = Camera.main.GetComponent<GameStateMachine>();
+        gameStateMachine_Ref = GameStateMachine.GetInstance();
     }
 
     public void ResumeGameButtonPressed()

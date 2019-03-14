@@ -40,7 +40,7 @@ public class BubbleManager : MonoBehaviour
 
     void Start()
     {
-        gameStateMachine_Ref = Camera.main.GetComponent<GameStateMachine>();
+        gameStateMachine_Ref = GameStateMachine.GetInstance(); 
 
         if (NullCheckGameStateMachine())
         {

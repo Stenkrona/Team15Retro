@@ -15,12 +15,31 @@ public class GameStateMachine : MonoBehaviour
 
     private IStateBase gameState;
     private BubbleManager bubbleManager_Ref;
+
+    private static GameStateMachine gameStateMachine_Ref;
    
     private Text debugTxtReference;
     private string currentState;
 
+    public static GameStateMachine GetInstance()
+    {
+        return gameStateMachine_Ref;
+    }
+
+    void Awake()
+    {
+        if(gameStateMachine_Ref == null)
+        {
+            gameStateMachine_Ref = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
+        gameStateMachine_Ref = this;
 
          if(canvas_Ref == null)
          {

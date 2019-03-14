@@ -9,7 +9,7 @@ public class MainMenuButton : MonoBehaviour
 
     void Start()
     {
-        gameStateMachine_Ref = Camera.main.GetComponent<GameStateMachine>();
+        gameStateMachine_Ref = GameStateMachine.GetInstance();
     }
 
     public void MainMenuButtonPressed()
