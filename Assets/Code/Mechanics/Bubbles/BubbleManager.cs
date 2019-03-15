@@ -299,9 +299,9 @@ public class BubbleManager : MonoBehaviour
         float xValue = v.x;
         float yValue = v.y;
 
-        if (v.y < noSpawnLowerBuffer)
+        if (v.y < p1_LeftBottom.y + noSpawnLowerBuffer)
         {
-            yValue = noSpawnLowerBuffer;
+            yValue = p1_LeftBottom.y + noSpawnLowerBuffer;
             return new Vector2(xValue, yValue);
         }
         else
