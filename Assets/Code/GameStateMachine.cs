@@ -14,6 +14,7 @@ public class GameStateMachine : MonoBehaviour
     public GameObject playerOneSpawner_Ref;
     public GameObject playerTwoSpawner_Ref;
     public BubbleManager bubbleManager_Ref;
+    public Text inGameText_Ref;
 
     public float timeToWaitBeforeScoreScreen;
 
@@ -24,6 +25,7 @@ public class GameStateMachine : MonoBehaviour
    
     private Text debugTxtReference;
     private string currentState;
+   
 
     private bool[] playerOneBlocksCollected;
     private bool[] playerTwoBlocksCollected;
@@ -188,6 +190,17 @@ public class GameStateMachine : MonoBehaviour
     }
     private void WeHaveAWinner(bool isPlayerOne)
     {
+        if (isPlayerOne)
+        {
+            inGameText_Ref.text = "Player One Wins!";
+            inGameText_Ref.gameObject.SetActive(true);
+        }
+        else
+        {
+            inGameText_Ref.text = "Player Two Wins!";
+            inGameText_Ref.gameObject.SetActive(true);
+        }
+
         Invoke("ChangeToScoreScreen", timeToWaitBeforeScoreScreen);
     }
     private void ChangeToScoreScreen()
