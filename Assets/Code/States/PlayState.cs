@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Code.Interfaces;
-//poop
+
 public class PlayState : IStateBase
 {
     private GameStateMachine gameStateMachine;
