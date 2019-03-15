@@ -330,11 +330,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5927723188871064754}
   - component: {fileID: 5927723188871064755}
-  - component: {fileID: 5927723188871064752}
   - component: {fileID: 5927723188871064757}
   m_Layer: 0
   m_Name: TestPiece
-  m_TagString: block
+  m_TagString: block1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,25 +378,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5927723188871064752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5927723188871064753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8291e726a6d65004396fa98ded651850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrusterPower: 1000
-  rotateSpeed: 100
-  input: {fileID: 11400000, guid: 65e15d1fd91ca964ba91b014c67e7cef, type: 2}
-  upThrusterParticle: {fileID: 5927723187608240112}
-  downThrusterParticle: {fileID: 3087397419008190077}
-  leftThrusterParticle: {fileID: 3087397419163050149}
-  rightThrusterParticle: {fileID: 3087397417889579118}
 --- !u!60 &5927723188871064757
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -438,11 +418,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5927723188396172680}
     m_Modifications:
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: BottomParticleThruster
-      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -508,17 +483,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.1111116
       objectReference: {fileID: 0}
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: BottomParticleThruster
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!4 &5927723187608240115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3087397418974237355}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &5927723187608240112 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 3087397418974237355}
   m_PrefabAsset: {fileID: 0}
@@ -529,11 +503,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5927723187003902800}
     m_Modifications:
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: TopParticleThruster
-      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -589,17 +558,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: TopParticleThruster
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!4 &3087397419008190078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5927723187439012646}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3087397419008190077 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 5927723187439012646}
   m_PrefabAsset: {fileID: 0}
@@ -610,11 +578,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5927723188358853388}
     m_Modifications:
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: LeftParticleThruster
-      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -670,17 +633,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: LeftParticleThruster
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!4 &3087397419163050150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5927723187872534014}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3087397419163050149 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 5927723187872534014}
   m_PrefabAsset: {fileID: 0}
@@ -691,11 +653,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5927723187055981837}
     m_Modifications:
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: RightParticleThruster
-      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -751,17 +708,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: RightParticleThruster
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!4 &3087397417889579117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 5927723188737977653}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3087397417889579118 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 5927723188737977653}
   m_PrefabAsset: {fileID: 0}
@@ -772,11 +728,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5927723188871064754}
     m_Modifications:
-    - target: {fileID: 6275295974433945097, guid: 1dcb642c0bf897d4989beaf8afe80e5c,
-        type: 3}
-      propertyPath: m_Name
-      value: ParticleCrash
-      objectReference: {fileID: 0}
     - target: {fileID: 6275295974433945100, guid: 1dcb642c0bf897d4989beaf8afe80e5c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -831,6 +782,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275295974433945097, guid: 1dcb642c0bf897d4989beaf8afe80e5c,
+        type: 3}
+      propertyPath: m_Name
+      value: ParticleCrash
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1dcb642c0bf897d4989beaf8afe80e5c, type: 3}
