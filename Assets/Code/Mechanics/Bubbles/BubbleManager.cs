@@ -7,14 +7,21 @@ public class BubbleManager : MonoBehaviour
 {
     private GameStateMachine gameStateMachine_Ref;
 
+    [Header("Manager Settings")]
     public bool isOn;
     public float noSpawnUpperBuffer;
     public float noSpawnLowerBuffer;
-
-    public GameObject bubblePrefab_Ref;
-    public GameObject bubblesParent;
     public int maxBubblesInPlay;
     public float minLengthTweenYValues;
+    public bool alternateSpawningSide;
+
+    [Header("Bubble Properties")]
+    public GameObject bubblePrefab_Ref;
+    public GameObject bubblesParent;
+    public float bubbleMovementSpeed;
+    public float bubbleElevationSpeed;
+    
+   
 
     [Header("Player One Borders")]
     public Vector2 p1_LeftBottom;
@@ -35,6 +42,7 @@ public class BubbleManager : MonoBehaviour
 
     private bool isSpawningRightSide;
     private float deSpawnZone;
+    private bool hasSpawnedLeftSide;
     
 
 
@@ -146,7 +154,11 @@ public class BubbleManager : MonoBehaviour
             {
                 //Spawn on player one side.
 
-                for (int i = 0; i < Mathf.Abs(bubblesOnPlayerOnesSide.Count - maxBubblesInPlay) ; i++)
+               
+
+                int timesToSpawn = Mathf.Abs(bubblesOnPlayerOnesSide.Count - maxBubblesInPlay);
+
+                for (int i = 0; i < timesToSpawn ; i++)
                 {
                     SpawnBubble(GetRandomSpawnPosition(true), true);
                 }
@@ -157,7 +169,9 @@ public class BubbleManager : MonoBehaviour
             {
                 //Spawn on player two side.
 
-                for (int i = 0; i < Mathf.Abs(bubblesOnPlayerTwosSide.Count - maxBubblesInPlay); i++)
+                int timesToSpawn = Mathf.Abs(bubblesOnPlayerTwosSide.Count - maxBubblesInPlay);
+
+                for (int i = 0; i < timesToSpawn; i++)
                 {
                     SpawnBubble(GetRandomSpawnPosition(false), false);
                 }
@@ -180,6 +194,8 @@ public class BubbleManager : MonoBehaviour
             tempBubble_Ref.myDeSpawnValue = deSpawnZone;
             tempBubble_Ref.bubbleManager_Ref = this;
             tempBubble_Ref.gameStateMachine_Ref = gameStateMachine_Ref;
+            tempBubble_Ref.movementSpeed = bubbleMovementSpeed;
+            tempBubble_Ref.elevationSpeed = bubbleElevationSpeed;
 
             if (playerOneSide)
             {
@@ -200,13 +216,15 @@ public class BubbleManager : MonoBehaviour
     }
     private Vector2 GetRandomSpawnPosition(bool playerOneSide)
     {
+       
         if (playerOneSide)
         {
             //Spawn on the Player One side.
 
+
             float randomFloat = Random.Range(0.0f, 1.0f);
 
-            if(randomFloat > .5)
+            if(randomFloat > .5 && !alternateSpawningSide || !hasSpawnedLeftSide && alternateSpawningSide)
             {
                 //Left side
                 float randomYValue = Random.Range(p1_LeftBottom.y, p1_LeftTop.y - noSpawnUpperBuffer);
@@ -215,12 +233,13 @@ public class BubbleManager : MonoBehaviour
                 deSpawnZone = p1_RightBottom.x;
 
                 Vector2 vectorToReturn = new Vector2(p1_LeftTop.x, randomYValue);
+                if (alternateSpawningSide) hasSpawnedLeftSide = true;
 
-              
+
                 return new Vector2(p1_LeftTop.x, randomYValue);
               
             }
-            else
+            else if(randomFloat < .5 && !alternateSpawningSide || hasSpawnedLeftSide && alternateSpawningSide)
             {
                 //Right side
                 float randomYValue = Random.Range(p1_RightBottom.y, p1_RightTop.y - noSpawnUpperBuffer);
@@ -228,8 +247,16 @@ public class BubbleManager : MonoBehaviour
                 isSpawningRightSide = true;
                 deSpawnZone = p1_LeftBottom.x;
 
+                if (alternateSpawningSide) hasSpawnedLeftSide = false;
+
                 return new Vector2(p1_RightTop.x, randomYValue);
             }
+            else
+            {
+                return new Vector2();
+            }
+
+            
         }
         else
         {
@@ -237,7 +264,7 @@ public class BubbleManager : MonoBehaviour
 
             float randomFloat = Random.Range(0.0f, 1.0f);
 
-            if(randomFloat > .5)
+            if(randomFloat > .5 && !alternateSpawningSide || !hasSpawnedLeftSide && alternateSpawningSide)
             {
                 //Left side
                 float randomYValue = Random.Range(p2_LeftBottom.y, p2_LeftTop.y - noSpawnUpperBuffer);
@@ -245,9 +272,11 @@ public class BubbleManager : MonoBehaviour
                 isSpawningRightSide = false;
                 deSpawnZone = p2_RightBottom.x;
 
+                if (alternateSpawningSide) hasSpawnedLeftSide = true;
+
                 return new Vector2(p2_LeftBottom.x, randomYValue);
             }
-            else
+            else if(randomFloat < .5 && !alternateSpawningSide || hasSpawnedLeftSide && alternateSpawningSide)
             {
                 //Right Side
                 float randomYValue = Random.Range(p2_RightBottom.y, p2_RightTop.y - noSpawnUpperBuffer);
@@ -255,7 +284,13 @@ public class BubbleManager : MonoBehaviour
                 isSpawningRightSide = true;
                 deSpawnZone = p2_LeftBottom.x;
 
+                if (alternateSpawningSide) hasSpawnedLeftSide = false;
+
                 return new Vector2(p2_RightBottom.x, randomYValue);
+            }
+            else
+            {
+                return new Vector2();
             }
         }
     }
