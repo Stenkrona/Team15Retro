@@ -4,9 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - block
-  - block2
   - block3
+  - block2
+  - block
+  - block1
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - SortingLayer
   - 
   - 
   - 
@@ -43,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Grid
+    uniqueID: 987952673
     locked: 0
