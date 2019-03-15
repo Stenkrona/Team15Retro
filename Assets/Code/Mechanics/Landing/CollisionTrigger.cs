@@ -7,6 +7,9 @@ public class CollisionTrigger : MonoBehaviour
 {
     ParticleSystem particleCrash;
 
+    [Header("Testing Player Input")]
+    public PlayerInput playerInput;
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -33,12 +36,24 @@ public class CollisionTrigger : MonoBehaviour
             if (blockRotation.eulerAngles.z < 2f || blockRotation.eulerAngles.z > 350f)
             {
                 Debug.Log("You fit!");
+
+                //Gives the player scores.
+                //GameStateMachine.GetInstance().Collected(bool playerOne, int BlockOne);
+
                 EventManager.TriggerEvent("BlocksCollected"); //This event should only fire when all blocks are collected
-                GameObject.FindGameObjectWithTag("block");
+                //GameObject.FindGameObjectWithTag("block");
+
+
+                //Remove the block from the spawner.
                 FindObjectOfType<Spawner>().SpawnNext();
-                //The block should also be removed from the spawner array
                 Destroy(blockOne);
                 //Particle should fire, but this is best done from a script on the gameobject.
+
+
+
+
+
+
             }
 
             //else if (blockRotation.eulerAngles.z > 350f)
