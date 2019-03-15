@@ -13,11 +13,11 @@ public class CollisionTrigger : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // EventManager.TriggerEvent("OnCollisionLander");
 
         //GameObject testShape = GameObject.Find("TestShape");
 
-        
+        //collision.gameObject.GetComponent<PlayerController>().input.name == "PlayerOneInput";
+
         //if (collision.gameObject.tag == "block")
         //{
             GameObject blockShape = collision.gameObject;
@@ -30,9 +30,10 @@ public class CollisionTrigger : MonoBehaviour
         {
 
             Debug.Log("Block Type 1");
-            GameObject blockOne = GameObject.Find("TestPiece");
+            //GameObject blockOne = GameObject.FindGameObjectWithTag("block");
+            //GameObject blockOne = GameObject.Find("TestPiece");
 
-            //Use the Operator on the other places as well.
+
             if (blockRotation.eulerAngles.z < 2f || blockRotation.eulerAngles.z > 350f)
             {
                 Debug.Log("You fit!");
@@ -46,51 +47,40 @@ public class CollisionTrigger : MonoBehaviour
 
                 //Remove the block from the spawner.
                 FindObjectOfType<Spawner>().SpawnNext();
-                Destroy(blockOne);
+                Destroy(gameObject);
+
+                //Destroy(blockOne);
                 //Particle should fire, but this is best done from a script on the gameobject.
-
-
-
-
-
 
             }
 
-            //else if (blockRotation.eulerAngles.z > 350f)
-            //{
-            //    Debug.Log("You fit event though you spun like crazy!");
-            //    EventManager.TriggerEvent("BlockCollected");
-            //}
+
 
         else
             {
 
                 FindObjectOfType<Spawner>().SpawnNext();
-                Destroy(blockOne);
+                //Destroy(blockOne);
+                Destroy(gameObject);
                 Debug.Log("Destroyed!");
             }
 
         }
 
 
-        //Please don't look at the code down below, it's all wrong, I'm changing it tomorrow!
+        
 
         else if (collision.gameObject.tag == "block2")
         {
 
             Debug.Log("Block Type 2");
+            //GameObject blockTwo = GameObject.FindGameObjectWithTag("block2");
+            //Destroy(blockTwo);
+            Debug.Log("Destroyed!");
+            Destroy(gameObject);
+            FindObjectOfType<Spawner>().SpawnNext();
 
-            if (blockRotation.eulerAngles.z < 2f)
-            {
-                Debug.Log("You fit!");
-                EventManager.TriggerEvent("BlockCollected");
-            }
 
-            else if (blockRotation.eulerAngles.z > 350f)
-            {
-                Debug.Log("You fit event though you spun like crazy!");
-                EventManager.TriggerEvent("BlockCollected");
-            }
 
         }
 
@@ -98,18 +88,13 @@ public class CollisionTrigger : MonoBehaviour
         {
 
             Debug.Log("Block Type 3");
+            //GameObject blockThree = GameObject.FindGameObjectWithTag("block3");
+            //Destroy(blockThree);
+            Debug.Log("Destroyed!");
+            Destroy(gameObject);
+            FindObjectOfType<Spawner>().SpawnNext();
 
-            if (blockRotation.eulerAngles.z < 2f)
-            {
-                Debug.Log("You fit!");
-                EventManager.TriggerEvent("BlockCollected");
-            }
 
-            else if (blockRotation.eulerAngles.z > 350f)
-            {
-                Debug.Log("You fit event though you spun like crazy!");
-                EventManager.TriggerEvent("BlockCollected");
-            }
 
         }
 
