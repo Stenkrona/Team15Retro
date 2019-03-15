@@ -11,6 +11,8 @@ public class PlayState : IStateBase
     private float timeBeingActive;
     private bool isDisplayingMessage;
 
+    private bool hasShownMessage;
+
    public PlayState(GameStateMachine gameStateMachine_Ref, bool showMessage)
     {
 
@@ -32,11 +34,11 @@ public class PlayState : IStateBase
         }
     }
 
-    public void StateUpdate(){
+    public void StateUpdate()
+    {
         TimeTracker();
 
         if(!isDisplayingMessage) PlayerInput();
-
       
     }
     public void ShowIt(){
@@ -56,7 +58,7 @@ public class PlayState : IStateBase
     {
         timeBeingActive += Time.deltaTime;
 
-        if (timeBeingActive > 2.0f)
+        if (timeBeingActive > 2.0f && !hasShownMessage)
         {
             isDisplayingMessage = false;
 
@@ -66,8 +68,8 @@ public class PlayState : IStateBase
             {
                 gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
             }
-           
-            Debug.Log("PlayState has shown its message!");
+
+            hasShownMessage = true;
         }
     }
     

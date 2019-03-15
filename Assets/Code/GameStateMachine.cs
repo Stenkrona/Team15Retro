@@ -8,38 +8,73 @@ public class GameStateMachine : MonoBehaviour
 {
     public bool debugMode;
     public GameObject canvas_Ref;
+    public GameObject bordersParent_Ref;
+    public GameObject playerOneParent_Ref;
+    public GameObject playerTwoParent_Ref;
+    
 
     private IStateBase gameState;
     private BubbleManager bubbleManager_Ref;
+
+    private static GameStateMachine gameStateMachine_Ref;
    
     private Text debugTxtReference;
     private string currentState;
 
-   
+    public static GameStateMachine GetInstance()
+    {
+        return gameStateMachine_Ref;
+    }
 
-    private int currentScore;
-
-  
-
-    // Start is called before the first frame update
+    void Awake()
+    {
+        if(gameStateMachine_Ref == null)
+        {
+            gameStateMachine_Ref = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
+        gameStateMachine_Ref = this;
 
-         if(canvas_Ref == null){canvas_Ref = transform.GetChild(0).gameObject;}
-        if(gameState == null){
+         if(canvas_Ref == null)
+         {
+            if (transform.GetChild(0).gameObject != null)
+            {
+                canvas_Ref = transform.GetChild(0).gameObject;
+            }
+            else
+            {
+                Debug.Log("GameStateMachine is missing a reference to the Canvas");
+            }
+        }
+         
+
+        if(gameState == null)
+        {
             gameState = new BeginState(this);
         }
        
+        if(bordersParent_Ref == null)
+        {
+            if(GameObject.Find("BordersParent") != null)
+            {
+                bordersParent_Ref = GameObject.Find("BordersParent");
+            }
+            else
+            {
+                Debug.Log("GameStateMachine is missing a reference to BordersParent");
+            }
+        }
 
-       
        gameState.ShowIt();
       
-
-     
-        currentScore = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         gameState.StateUpdate();
@@ -49,25 +84,20 @@ public class GameStateMachine : MonoBehaviour
         gameState = newState;
         gameState.ShowIt();
     }
-    public void TurnOnCanvasSection(int child){
+    public void TurnOnCanvasSection(int child)
+    {
+        //the argument child will be the canvas child index and that child will be set active
+        // all the other childs will be set inactive.
+
         int canvasChildLength = canvas_Ref.transform.childCount;
        
         for (int i = 0; i < canvasChildLength; i++)
         {
             canvas_Ref.transform.GetChild(i).gameObject.SetActive(false);
         }
-         canvas_Ref.transform.GetChild(child).gameObject.SetActive(true);
-         if(debugMode){
-             canvas_Ref.transform.GetChild(
-                 (canvasChildLength -1)).gameObject.SetActive(true);
-                  
 
-                    if(child == 0) currentState = "BeginState";
-                    else if(child == 1) currentState = "MainMenuState";
-                    else if(child == 2) currentState = "PlayState";
-                    else if(child == 3) currentState = "PauseState";
-                 debugTxtReference.text = (("Current Game State: ") + currentState);
-         }
+        canvas_Ref.transform.GetChild(child).gameObject.SetActive(true);
+
     }
    
   

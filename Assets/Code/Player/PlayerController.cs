@@ -4,37 +4,35 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D playerRigidBody;
+    private Rigidbody playerRigidBody;
     private Transform playerTransform;
     public float thrusterPower = 1000;
     public float rotateSpeed = 100;
     public PlayerInput input;
 
+
     private void Start()
     {
         //get the transform and the rigidbody from the gameobject and set them
-        if (!gameObject.GetComponent<Rigidbody2D>())
-            gameObject.AddComponent<Rigidbody2D>();
-
-        playerRigidBody = gameObject.GetComponent<Rigidbody2D>();
-        playerRigidBody.gravityScale = 0.2f;
+        if (gameObject.GetComponent<Rigidbody>())
+            playerRigidBody = gameObject.GetComponent<Rigidbody>();
         if (gameObject.GetComponent<Transform>())
             playerTransform = gameObject.GetComponent<Transform>();
     }
     void FixedUpdate()
     {
-        if (gameObject.GetComponent<Rigidbody2D>())
+        if (gameObject.GetComponent<Rigidbody>())
         {
             //Up and down thursters
             if (Input.GetKey(input.upThruster))
-                playerRigidBody.AddRelativeForce(new Vector2(0, thrusterPower * Time.deltaTime));
+                playerRigidBody.AddRelativeForce(0, thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
             if (Input.GetKey(input.downThruster))
-                playerRigidBody.AddRelativeForce(new Vector2(0, -thrusterPower * Time.deltaTime));
+                playerRigidBody.AddRelativeForce(0, -thrusterPower * Time.deltaTime, 0, ForceMode.Acceleration);
             //Left and right thrusters
             if (Input.GetKey(input.rightThurster))
-                playerRigidBody.AddRelativeForce(new Vector2(-thrusterPower * Time.deltaTime, 0));
+                playerRigidBody.AddRelativeForce(-thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
             if (Input.GetKey(input.leftThurster))
-                playerRigidBody.AddRelativeForce(new Vector2(thrusterPower * Time.deltaTime, 0));
+                playerRigidBody.AddRelativeForce(thrusterPower * Time.deltaTime, 0, 0, ForceMode.Acceleration);
         }
         if (gameObject.GetComponent<Transform>())
         {
