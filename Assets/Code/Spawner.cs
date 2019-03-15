@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public Vector3 playerSpawnpoint;
     public PlayerInput playerInput;
 
-    public float thrustPower;
+    public float thrustPower = 750;
 
     public GameObject[] groups;
     GameObject instanceGroup;
@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
         }
     }
     
-    //can be called using FindObjectOfType<Spawner>().SpawnNext(); OBS only works if the gameobject is called Spawner
+
     public void SpawnNext()
     {
         int i = Random.Range(0, groups.Length);
