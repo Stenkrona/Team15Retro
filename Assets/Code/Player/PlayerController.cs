@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     public float thrusterPower = 1000;
     public float rotateSpeed = 100;
     public PlayerInput input;
-
+    public ParticleSystem upThrusterParticle;
+    public ParticleSystem downThrusterParticle;
+    public ParticleSystem leftThrusterParticle;
+    public ParticleSystem rightThrusterParticle;
 
     private void Start()
     {
@@ -43,5 +46,24 @@ public class PlayerController : MonoBehaviour
             float xAxisValue = Input.GetAxis(input.horizontalAxis);
             playerTransform.Rotate(new Vector3(0, 0, -xAxisValue * rotateSpeed * Time.deltaTime));
         }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(input.upThruster))
+            upThrusterParticle.Play();
+        if (Input.GetKeyUp(input.upThruster))
+            upThrusterParticle.Stop();
+        if (Input.GetKeyDown(input.downThruster))
+            downThrusterParticle.Play();
+        if (Input.GetKeyUp(input.downThruster))
+            downThrusterParticle.Stop();
+        if (Input.GetKeyDown(input.leftThurster))
+            leftThrusterParticle.Play();
+        if (Input.GetKeyUp(input.leftThurster))
+            leftThrusterParticle.Stop();
+        if (Input.GetKeyDown(input.rightThurster))
+            rightThrusterParticle.Play();
+        if (Input.GetKeyUp(input.rightThurster))
+            rightThrusterParticle.Stop();
     }
 }
