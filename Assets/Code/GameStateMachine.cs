@@ -15,6 +15,8 @@ public class GameStateMachine : MonoBehaviour
     public GameObject playerTwoSpawner_Ref;
     public BubbleManager bubbleManager_Ref;
 
+    public float timeToWaitBeforeScoreScreen;
+
     private IStateBase gameState;
     
 
@@ -22,6 +24,9 @@ public class GameStateMachine : MonoBehaviour
    
     private Text debugTxtReference;
     private string currentState;
+
+    private bool[] playerOneBlocksCollected;
+    private bool[] playerTwoBlocksCollected;
 
     public static GameStateMachine GetInstance()
     {
@@ -74,9 +79,12 @@ public class GameStateMachine : MonoBehaviour
         }
 
        gameState.ShowIt();
+
+        playerOneBlocksCollected = new bool[7];
+        playerTwoBlocksCollected = new bool[7];
       
     }
-
+   
     void Update()
     {
         gameState.StateUpdate();
@@ -145,6 +153,46 @@ public class GameStateMachine : MonoBehaviour
 
             return new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
         }
+    }
+
+    public void Collected(bool isPlayerOne, int blockCollected)
+    {
+        if (isPlayerOne)
+        {
+            playerOneBlocksCollected[blockCollected] = true;
+        }
+        else
+        {
+            playerTwoBlocksCollected[blockCollected] = true;
+        }
+
+        CheckIfSomeoneWon();
+    }
+    private void CheckIfSomeoneWon()
+    {
+        bool playerOneWon = true;
+        bool playerTwoWon = true;
+
+        foreach(bool b in playerOneBlocksCollected)
+        {
+            if (!b) playerOneWon = false; break;
+        }
+
+        foreach(bool b in playerTwoBlocksCollected)
+        {
+            if (!b) playerTwoWon = false; break;
+        }
+
+        if (playerOneWon) WeHaveAWinner(true);
+        else if (playerTwoWon) WeHaveAWinner(false);
+    }
+    private void WeHaveAWinner(bool isPlayerOne)
+    {
+        Invoke("ChangeToScoreScreen", timeToWaitBeforeScoreScreen);
+    }
+    private void ChangeToScoreScreen()
+    {
+        ChangeState(new ScoreScreenState(this));
     }
    
   
