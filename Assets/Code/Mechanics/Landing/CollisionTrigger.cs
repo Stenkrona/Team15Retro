@@ -64,7 +64,8 @@ public class CollisionTrigger : MonoBehaviour
 
         else
             {
-                
+
+                FindObjectOfType<Spawner>().SpawnNext();
                 Destroy(blockOne);
                 Debug.Log("Destroyed!");
             }
