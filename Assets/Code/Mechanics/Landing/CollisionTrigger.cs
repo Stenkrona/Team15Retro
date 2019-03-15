@@ -33,7 +33,7 @@ public class CollisionTrigger : MonoBehaviour
             if (blockRotation.eulerAngles.z < 2f || blockRotation.eulerAngles.z > 350f)
             {
                 Debug.Log("You fit!");
-                EventManager.TriggerEvent("BlockCollected"); //This event should only fire when all blocks are collected
+                EventManager.TriggerEvent("BlocksCollected"); //This event should only fire when all blocks are collected
                 GameObject.FindGameObjectWithTag("block");
                 FindObjectOfType<Spawner>().SpawnNext();
                 //The block should also be removed from the spawner array
