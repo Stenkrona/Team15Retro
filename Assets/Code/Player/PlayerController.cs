@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
         playerRigidBody.gravityScale = 0.2f;
         if (gameObject.GetComponent<Transform>())
             playerTransform = gameObject.GetComponent<Transform>();
+        GetThrusterParticleSystems();
+        if (thrusterPower == 0) thrusterPower = 500;
     }
     void FixedUpdate()
     {
@@ -66,4 +68,29 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(input.rightThurster))
             rightThrusterParticle.Stop();
     }
+    private void GetThrusterParticleSystems()
+    {
+        if(upThrusterParticle == null)
+        {
+            upThrusterParticle = transform.GetChild(3).GetChild(0)
+                .GetComponent<ParticleSystem>();
+        }
+        if(downThrusterParticle == null)
+        {
+            downThrusterParticle = transform.GetChild(1).GetChild(0)
+                .GetComponent<ParticleSystem>();
+        }
+        if(leftThrusterParticle == null)
+        {
+            leftThrusterParticle = transform.GetChild(0).GetChild(0)
+                .GetComponent<ParticleSystem>();
+        }
+        if(rightThrusterParticle == null)
+        {
+            rightThrusterParticle = transform.GetChild(2).GetChild(0)
+                .GetComponent<ParticleSystem>();
+        }
+            
+    }
 }
+
