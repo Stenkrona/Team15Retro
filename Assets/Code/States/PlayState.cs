@@ -67,6 +67,7 @@ public class PlayState : IStateBase
 
             if (gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject != null)
             {
+
                 gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
             }
 
