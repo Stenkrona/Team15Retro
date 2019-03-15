@@ -27,6 +27,7 @@ public class PlayState : IStateBase
         if (!showMessage)
         {
             gameStateMachine.BubbleManager_Ref.TurnOn();
+            gameStateMachine.ToggleSpawners(true);
         }
         if (debugMode)
         {
@@ -68,6 +69,8 @@ public class PlayState : IStateBase
             {
                 gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
             }
+
+            gameStateMachine.ToggleSpawners(true);
 
             hasShownMessage = true;
         }
