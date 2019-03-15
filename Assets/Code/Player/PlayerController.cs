@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// poop
+
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRigidBody;
