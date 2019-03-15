@@ -16,6 +16,8 @@ public class Bubble : MonoBehaviour
 
     private bool hasCaughtTetrisBlock;
     private GameObject myCaugtBlock;
+    private float bobSpeed = 1;
+    private float bobTimeTracker;
 
     void Start()
     {
@@ -36,6 +38,7 @@ public class Bubble : MonoBehaviour
         {
             if (!hasCaughtTetrisBlock)
             {
+                
                 if (isMovingLeft)
                 {
                     transform.Translate(Vector2.left * Time.deltaTime * movementSpeed);
@@ -49,7 +52,7 @@ public class Bubble : MonoBehaviour
             {
                 transform.Translate(Vector2.up * Time.deltaTime * elevationSpeed);
 
-                if(transform.position.y >= bubbleManager_Ref.p1_LeftTop.y)
+                if(transform.position.y >= bubbleManager_Ref.p1_LeftTop.y - 2.0f)
                 {
                     RemoveMeFromBubbleManagerList();
                     SetBlockParent();
@@ -86,7 +89,7 @@ public class Bubble : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.GetComponent<Bubble>() == null)
+        if (coll.GetComponent<PlayerController>() != null)
         {
             SetBlockToKinematic(coll.gameObject);
 
@@ -120,5 +123,29 @@ public class Bubble : MonoBehaviour
     private void SetBlockToDynamic(GameObject block)
     {
         block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+    }
+    private void BubbleBobbing()
+    {
+
+       
+        float Yvalue = Mathf.Cos(PercentageOfBob()) + 1;
+
+        transform.localPosition = new Vector3(transform.position.x, Yvalue + transform.position.y, 0);
+    }
+    private float PercentageOfBob()
+    {
+        if (bobTimeTracker >= bobSpeed)
+            bobTimeTracker = 0;
+
+
+
+
+        bobTimeTracker += Time.deltaTime;
+
+        return bobTimeTracker / bobSpeed;
+        
+        
+
+
     }
 }
