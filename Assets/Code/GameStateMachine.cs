@@ -11,10 +11,12 @@ public class GameStateMachine : MonoBehaviour
     public GameObject bordersParent_Ref;
     public GameObject playerOneParent_Ref;
     public GameObject playerTwoParent_Ref;
-    
+    public GameObject playerOneSpawner_Ref;
+    public GameObject playerTwoSpawner_Ref;
+    public BubbleManager bubbleManager_Ref;
 
     private IStateBase gameState;
-    private BubbleManager bubbleManager_Ref;
+    
 
     private static GameStateMachine gameStateMachine_Ref;
    
@@ -98,6 +100,51 @@ public class GameStateMachine : MonoBehaviour
 
         canvas_Ref.transform.GetChild(child).gameObject.SetActive(true);
 
+    }
+    public void ToggleSpawners(bool b)
+    {
+
+
+        if (playerOneSpawner_Ref != null)
+        {
+            playerOneSpawner_Ref.GetComponent<Spawner>().playerSpawnpoint = FindSpawnPosition(true);
+            playerOneSpawner_Ref.SetActive(b);
+        }
+        else
+        {
+            Debug.Log("GameStateMachine is missing a reference to player ONE's spawner!");
+        }
+
+        if (playerTwoSpawner_Ref != null)
+        {
+            playerTwoSpawner_Ref.GetComponent<Spawner>().playerSpawnpoint = FindSpawnPosition(false);
+            playerTwoSpawner_Ref.SetActive(b);
+        }
+        else
+        {
+            Debug.Log("GameStateMachine is missing a reference to player TWO's spawner!");
+        }
+    }
+    private Vector2 FindSpawnPosition(bool playerOneSide)
+    {
+        if (playerOneSide)
+        {
+            float topLeftX = bubbleManager_Ref.p1_LeftTop.x;
+            float topRightX = bubbleManager_Ref.p1_RightTop.x;
+
+            float middleX = Mathf.Abs((topLeftX - topRightX)/2) - topRightX;
+
+            return new Vector2(middleX * -1, bubbleManager_Ref.p2_LeftTop.y);
+        }
+        else
+        {
+            float topLeftX = bubbleManager_Ref.p2_LeftTop.x;
+            float topRightX = bubbleManager_Ref.p2_RightTop.x;
+
+            float middleX = Mathf.Abs((topLeftX - topRightX) /2) + topLeftX;
+
+            return new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
+        }
     }
    
   
