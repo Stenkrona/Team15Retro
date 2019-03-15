@@ -49,10 +49,11 @@ public class Bubble : MonoBehaviour
             {
                 transform.Translate(Vector2.up * Time.deltaTime * elevationSpeed);
 
-                if(transform.position.y >= 10)
+                if(transform.position.y >= bubbleManager_Ref.p1_LeftTop.y)
                 {
                     RemoveMeFromBubbleManagerList();
                     SetBlockParent();
+                    SetBlockToDynamic(myCaugtBlock);
                     Destroy(gameObject);
                 }
             }
@@ -85,18 +86,21 @@ public class Bubble : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll)
     {
-        Debug.Log("Hit");
-
-        if(coll.gameObject.tag == "Player")
+        if (coll.GetComponent<Bubble>() == null)
         {
+            SetBlockToKinematic(coll.gameObject);
+
+            gameObject.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+
             myCaugtBlock = coll.gameObject;
 
             hasCaughtTetrisBlock = true;
 
             coll.transform.position = transform.position;
-                
+
             coll.transform.SetParent(gameObject.transform);
         }
+        
     }
     private void SetBlockParent()
     {
@@ -108,5 +112,13 @@ public class Bubble : MonoBehaviour
         {
             myCaugtBlock.transform.SetParent(gameStateMachine_Ref.playerTwoParent_Ref.transform);
         }
+    }
+    private void SetBlockToKinematic(GameObject block)
+    {
+        block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+    }
+    private void SetBlockToDynamic(GameObject block)
+    {
+        block.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 }
