@@ -10,6 +10,7 @@ public class PlayState : IStateBase
     private bool debugMode;
     private float timeBeingActive;
     private bool isDisplayingMessage;
+    
 
     private bool hasShownMessage;
 
@@ -57,7 +58,7 @@ public class PlayState : IStateBase
     }
     private void TimeTracker()
     {
-        timeBeingActive += Time.deltaTime;
+        if (gameStateMachine.IntroIsDone) timeBeingActive += Time.deltaTime;
 
         if (timeBeingActive > 2.0f && !hasShownMessage)
         {

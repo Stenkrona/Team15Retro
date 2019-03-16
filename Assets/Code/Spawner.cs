@@ -34,27 +34,29 @@ public class Spawner : MonoBehaviour
 
     public void SpawnNext()
     {
-        int i = Random.Range(0, groups.Length);
+
+            int i = Random.Range(0, groups.Length);
+
+            if (groups[i] == null)
+            {
+                SpawnNext();
+                return;
+            }
+
+            if (playerInput != null)
+            {
+                instanceGroup = groups[i];
+
+                PlayerController instanceController = Instantiate(groups[i], playerSpawnpoint, Quaternion.identity).AddComponent<PlayerController>();
+
+                instanceController.input = playerInput;
+                instanceController.thrusterPower = thrustPower;
+
+            }
+            else
+            {
+                Debug.Log("NO PLAYER INPUT SELECTED IN SPAWNER");
+            }
         
-        if(groups[i] == null)
-        {
-            SpawnNext();
-            return;
-        }
-        
-        if(playerInput != null)
-        {
-            instanceGroup = groups[i];
-
-            PlayerController instanceController = Instantiate(groups[i], playerSpawnpoint, Quaternion.identity).AddComponent<PlayerController>();
-
-            instanceController.input = playerInput;
-            instanceController.thrusterPower = thrustPower;
-
-        }
-        else
-        {
-            Debug.Log("NO PLAYER INPUT SELECTED IN SPAWNER");
-        }
     }
 }

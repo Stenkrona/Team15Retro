@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Code.Interfaces;
+using UnityEngine.SceneManagement;
 
 public class BeginState : IStateBase
 {
@@ -26,6 +27,10 @@ public class BeginState : IStateBase
             Debug.Log("BeginState cannot get a reference to the canvas");
         }
 
+        if (gameStateMachine.GameOver)
+            gameStateMachine.Reset();
+       
+
             timeBeingActive = 0;
             lifeTime = 3;
         if(debugMode){
@@ -38,7 +43,7 @@ public class BeginState : IStateBase
         TimeCounter();
     }
     public void ShowIt(){
-        canvas_ref.transform.GetChild(0).gameObject.SetActive(true);
+        gameStateMachine.TurnOnCanvasSection(0);
     }
     public void PlayerInput()
     {

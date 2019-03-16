@@ -9,6 +9,7 @@ public class CollisionTrigger : MonoBehaviour
 
     private GameStateMachine gameStateMachine_Ref;
     private bool amIPlayerOne;
+    private Spawner mySpawner_Ref;
 
     [Header("Testing Player Input")]
     public PlayerInput playerInput;
@@ -17,6 +18,15 @@ public class CollisionTrigger : MonoBehaviour
     {
        amIPlayerOne = AmIOnPlayerOneSide();
         gameStateMachine_Ref = GameStateMachine.GetInstance();
+
+        if (amIPlayerOne)
+        {
+           mySpawner_Ref = gameStateMachine_Ref.playerOneSpawner_Ref.GetComponent<Spawner>();
+        }
+        else
+        {
+           mySpawner_Ref = gameStateMachine_Ref.playerTwoSpawner_Ref.GetComponent<Spawner>();
+        }
     }
 
 
@@ -122,16 +132,14 @@ public class CollisionTrigger : MonoBehaviour
     }
     private void SpawnNextAndKillBlock(Collision2D collision)
     {
-        if (amIPlayerOne)
-        {
-            gameStateMachine_Ref.playerOneSpawner_Ref.GetComponent<Spawner>().SpawnNext();
-        }
-        else
-        {
-            gameStateMachine_Ref.playerTwoSpawner_Ref.GetComponent<Spawner>().SpawnNext();
-        }
 
-
+        //gameStateMachine_Ref.Collected(amIPlayerOne, (int)collision.gameObject.GetComponent<MyBlockType>().myBlockType);
+        mySpawner_Ref.RemoveGroup();
+        if (!gameStateMachine_Ref.GameOver)
+        {
+            if (!gameStateMachine_Ref.Collected(amIPlayerOne, (int)collision.gameObject.GetComponent<MyBlockType>().myBlockType))
+                mySpawner_Ref.SpawnNext();
+        }
         Destroy(collision.gameObject);
     }
 

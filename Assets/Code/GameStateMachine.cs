@@ -4,18 +4,28 @@ using UnityEngine;
 using Assets.Code.Interfaces;
 using UnityEngine.UI;
 
+public enum BlockType {I = 0, J = 1, L = 2, O = 3, S = 4, T = 5, Z = 6}
+
 public class GameStateMachine : MonoBehaviour
 {
-    public bool debugMode;
+    
+    [Header("Needed References")]
     public GameObject canvas_Ref;
     public GameObject bordersParent_Ref;
     public GameObject playerOneParent_Ref;
     public GameObject playerTwoParent_Ref;
     public GameObject playerOneSpawner_Ref;
     public GameObject playerTwoSpawner_Ref;
+    public GameObject introTauntScreen_Ref;
+    public GameObject scoreScreen_Ref;
     public BubbleManager bubbleManager_Ref;
     public Text inGameText_Ref;
+    public PlayerInfoUI playerInfoOne_Ref;
+    public PlayerInfoUI playerInfoTwo_Ref;
+    public InGameUIManager inGameUIManager_Ref;
 
+    [Header("Settings")]
+    public bool debugMode;
     public float timeToWaitBeforeScoreScreen;
 
     private IStateBase gameState;
@@ -25,10 +35,22 @@ public class GameStateMachine : MonoBehaviour
    
     private Text debugTxtReference;
     private string currentState;
+
+    private PlayerCharacter playerOneCharacter;
+    private PlayerCharacter playerTwoCharacter;
+    private PlayerCharacter[] playerCharacterArray;
+
+    private Object[] portrait_Refs;
+    private Object[] introPhrases;
+    private Object[] victoryPhrases;
    
+
 
     private bool[] playerOneBlocksCollected;
     private bool[] playerTwoBlocksCollected;
+    private bool introIsDone;
+    private bool gameOver;
+    private bool playerOneWon;
 
     public static GameStateMachine GetInstance()
     {
@@ -45,6 +67,16 @@ public class GameStateMachine : MonoBehaviour
         {
             Destroy(this);
         }
+
+        portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+        introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
+        victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
+
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
+        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
+
+      
     }
     void Start()
     {
@@ -80,11 +112,20 @@ public class GameStateMachine : MonoBehaviour
             }
         }
 
-       gameState.ShowIt();
+        if(playerInfoOne_Ref == null)
+                Debug.Log("GameStateMachine is missing a reference to playerOneInfo");
+            
+        
+        if (playerInfoTwo_Ref == null)
+                Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
+            
+        
+
+        gameState.ShowIt();
 
         playerOneBlocksCollected = new bool[7];
         playerTwoBlocksCollected = new bool[7];
-      
+
     }
    
     void Update()
@@ -157,63 +198,172 @@ public class GameStateMachine : MonoBehaviour
         }
     }
 
-    public void Collected(bool isPlayerOne, int blockCollected)
+    public bool Collected(bool isPlayerOne, int blockCollected)
     {
+
         if (isPlayerOne)
         {
             playerOneBlocksCollected[blockCollected] = true;
+            inGameUIManager_Ref.ActivateImage(true, blockCollected);
         }
         else
         {
             playerTwoBlocksCollected[blockCollected] = true;
+            inGameUIManager_Ref.ActivateImage(false, blockCollected);
         }
 
-        CheckIfSomeoneWon();
+       return CheckIfSomeoneWon();
     }
-    private void CheckIfSomeoneWon()
+    private bool CheckIfSomeoneWon()
     {
         bool playerOneWon = true;
         bool playerTwoWon = true;
 
         foreach(bool b in playerOneBlocksCollected)
         {
-            if (!b) playerOneWon = false; break;
+            if (!b)
+            {
+                
+                playerOneWon = false; break;
+            }
         }
 
         foreach(bool b in playerTwoBlocksCollected)
         {
-            if (!b) playerTwoWon = false; break;
+            if (!b)
+            {
+                playerTwoWon = false; break;
+            }
         }
 
-        if (playerOneWon) WeHaveAWinner(true);
-        else if (playerTwoWon) WeHaveAWinner(false);
-    }
-    private void WeHaveAWinner(bool isPlayerOne)
-    {
-        if (isPlayerOne)
+        if (playerOneWon)
         {
-            inGameText_Ref.text = "Player One Wins!";
-            inGameText_Ref.gameObject.SetActive(true);
+            WeHaveAWinner(true);
+            return true;
+        }
+
+        else if (playerTwoWon)
+        {
+            WeHaveAWinner(false);
+            return true;
         }
         else
         {
-            inGameText_Ref.text = "Player Two Wins!";
-            inGameText_Ref.gameObject.SetActive(true);
+            return false;
+        }
+    }
+    private void WeHaveAWinner(bool isPlayerOne)
+    {
+        if (!gameOver)
+        {
+            gameOver = true;
+
+            if (isPlayerOne)
+            {
+                playerOneWon = true;
+                inGameText_Ref.text = "Player One Wins!";
+                inGameText_Ref.transform.parent.gameObject.SetActive(true);
+
+               
+            }
+            else
+            {
+                playerOneWon = false;
+                inGameText_Ref.text = "Player Two Wins!";
+                inGameText_Ref.transform.parent.gameObject.SetActive(true);
+
+               
+            }
         }
 
         Invoke("ChangeToScoreScreen", timeToWaitBeforeScoreScreen);
     }
     private void ChangeToScoreScreen()
     {
+        bubbleManager_Ref.TurnOff();
         ChangeState(new ScoreScreenState(this));
     }
-   
-  
-   
+    public void TurnOffIntroTauntScreen()
+    {
+        introTauntScreen_Ref.SetActive(false);
+    }
+    public void Reset()
+    {
+        if (gameStateMachine_Ref == null)
+        {
+            gameStateMachine_Ref = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+        introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
+        victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
+
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
+        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
+
+        gameStateMachine_Ref = this;
+
+        if (canvas_Ref == null)
+        {
+            if (transform.GetChild(0).gameObject != null)
+            {
+                canvas_Ref = transform.GetChild(0).gameObject;
+            }
+            else
+            {
+                Debug.Log("GameStateMachine is missing a reference to the Canvas");
+            }
+        }
+
+
+        if (gameState == null)
+        {
+            gameState = new BeginState(this);
+        }
+
+        if (bordersParent_Ref == null)
+        {
+            if (GameObject.Find("BordersParent") != null)
+            {
+                bordersParent_Ref = GameObject.Find("BordersParent");
+            }
+            else
+            {
+                Debug.Log("GameStateMachine is missing a reference to BordersParent");
+            }
+        }
+
+        if (playerInfoOne_Ref == null)
+            Debug.Log("GameStateMachine is missing a reference to playerOneInfo");
+
+
+        if (playerInfoTwo_Ref == null)
+            Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
+
+
+
+        gameState.ShowIt();
+
+        playerOneBlocksCollected = new bool[7];
+        playerTwoBlocksCollected = new bool[7];
+        gameOver = false;
+
+    }
+
+
+
     // properties
     public GameObject Canvas_Ref {get {return canvas_Ref;}}
     public BubbleManager BubbleManager_Ref { set { bubbleManager_Ref = value; } get { return bubbleManager_Ref; } }
-  
+    public PlayerCharacter[] PlayerCharacterArray { get { return playerCharacterArray; } }
+    public bool IntroIsDone { get { return introIsDone; } set { introIsDone = value; } }
+    public bool PlayerOneWon { get { return playerOneWon; } }
+    public bool GameOver { get { return gameOver; } }
    
 
 }
