@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BubbleManager : MonoBehaviour
 {
+    private static BubbleManager bubbleManager_Ref;
     private GameStateMachine gameStateMachine_Ref;
 
     [Header("Manager Settings")]
@@ -20,8 +21,6 @@ public class BubbleManager : MonoBehaviour
     public GameObject bubblesParent;
     public float bubbleMovementSpeed;
     public float bubbleElevationSpeed;
-    
-   
 
     [Header("Player One Borders")]
     public Vector2 p1_LeftBottom;
@@ -43,25 +42,29 @@ public class BubbleManager : MonoBehaviour
     private bool isSpawningRightSide;
     private float deSpawnZone;
     private bool hasSpawnedLeftSide;
+
+    public static BubbleManager GetInstance()
+    {
+        return bubbleManager_Ref;
+    }
     
+    void Awake()
+    {
+        if(bubbleManager_Ref == null)
+        {
+            bubbleManager_Ref = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
 
     void Start()
     {
         gameStateMachine_Ref = GameStateMachine.GetInstance(); 
 
-        if (NullCheckGameStateMachine())
-        {
-            gameStateMachine_Ref.BubbleManager_Ref = this;
-        }
-        else
-        {
-            Debug.Log("BubbleManager is missing a reference to GameStateMachine");
-        }
-        if (!NullCheckBubblePrefab_Ref())
-        {
-            Debug.Log("BubbleManager is missing a reference to BubblePrefab");
-        }
         MakeArrayOfVectors();
 
         GetBorders();
@@ -99,17 +102,7 @@ public class BubbleManager : MonoBehaviour
         borderVectorsArray = new Vector2[] {p1_LeftBottom, p1_LeftTop, p1_RightBottom, p1_RightTop,
             p2_LeftBottom, p2_LeftTop, p2_RightBottom, p2_RightTop};
     }
-    private bool NullCheckGameStateMachine()
-    {
-        if(gameStateMachine_Ref == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
+    
     private bool NullCheckBubblePrefab_Ref()
     {
         if(bubblePrefab_Ref != null)
@@ -178,6 +171,7 @@ public class BubbleManager : MonoBehaviour
                
             }
         }
+        
     }
     private void SpawnBubble(Vector2 v, bool playerOneSide)
     {
@@ -400,6 +394,22 @@ public class BubbleManager : MonoBehaviour
         p2_RightBottom = borderVectorsArray[6];
         p2_RightTop = borderVectorsArray[7];
     }
+    public void KillAllBubbles()
+    {
+        foreach(GameObject bubble in bubblesOnPlayerOnesSide)
+        {
+            Destroy(bubble);
+        }
+        foreach (GameObject bubble in bubblesOnPlayerTwosSide)
+        {
+            Destroy(bubble);
+        }
+
+        bubblesOnPlayerOnesSide = new List<GameObject>();
+        bubblesOnPlayerTwosSide = new List<GameObject>();
+
+    }
+    
     //properties
     public List<GameObject> BubblesOnPlayerOnesSide
     { get { return bubblesOnPlayerOnesSide; }

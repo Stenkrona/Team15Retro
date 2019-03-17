@@ -9,7 +9,7 @@ public class PlayerInfoUI : MonoBehaviour
 
 
     public Text playerNameDisplay;
-    public Text scoreDisplay;
+  
     public Image playerPortraitDisplay;
 
     public bool amIPlayerOne;
@@ -17,17 +17,44 @@ public class PlayerInfoUI : MonoBehaviour
     void Awake()
     {
         if(playerNameDisplay == null)
-            playerNameDisplay = transform.GetChild(0).GetComponent<Text>();
-
-        if (scoreDisplay == null)
-            scoreDisplay = transform.GetChild(1).GetComponent<Text>();
+        {
+            if(transform.GetChild(0) != null && transform.GetChild(0).GetComponent<Text>() != null)
+            {
+                playerNameDisplay = transform.GetChild(0).GetComponent<Text>();
+            }
+            else
+            {
+                Debug.Log("PlayerInfo, player one: " + amIPlayerOne + " , can't get a" +
+                    " reference to playerNameDisplay Text");
+            }
+        }
 
         if (playerPortraitDisplay == null)
-            playerPortraitDisplay = transform.GetChild(2).GetComponent<Image>();
+        {
+            if(transform.GetChild(2) != null && transform.GetChild(2).GetComponent<Image>() != null)
+            {
+                playerPortraitDisplay = transform.GetChild(2).GetComponent<Image>();
+            }
+            else
+            {
+                Debug.Log("PlayerInfo, player one: " + amIPlayerOne + " , can't get a" +
+                   " reference to playerPortrait Image");
+            }
+        }
+          
         
 
     }
     void Start()
+    {
+        SetReferences();
+    }
+    void OnEnable()
+    {
+        SetReferences();
+    }
+
+    private void SetReferences()
     {
         gameStateMachine_Ref = GameStateMachine.GetInstance();
 
@@ -39,6 +66,31 @@ public class PlayerInfoUI : MonoBehaviour
         {
             playerPortraitDisplay.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
         }
-           
+
+        if (playerNameDisplay == null)
+        {
+            if (transform.GetChild(0) != null && transform.GetChild(0).GetComponent<Text>() != null)
+            {
+                playerNameDisplay = transform.GetChild(0).GetComponent<Text>();
+            }
+            else
+            {
+                Debug.Log("PlayerInfo, player one: " + amIPlayerOne + " , can't get a" +
+                    " reference to playerNameDisplay Text");
+            }
+        }
+
+        if (playerPortraitDisplay == null)
+        {
+            if (transform.GetChild(2) != null && transform.GetChild(2).GetComponent<Image>() != null)
+            {
+                playerPortraitDisplay = transform.GetChild(2).GetComponent<Image>();
+            }
+            else
+            {
+                Debug.Log("PlayerInfo, player one: " + amIPlayerOne + " , can't get a" +
+                   " reference to playerPortrait Image");
+            }
+        }
     }
 }

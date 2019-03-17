@@ -23,6 +23,10 @@ public class PlayState : IStateBase
         {
             Debug.Log("------------Running PlayState Constructor-------------");
         }
+        if (!gameStateMachine.IntroIsDone)
+        {
+            gameStateMachine_Ref.introTauntScreen_Ref.SetActive(true);
+        }
             canvas_ref = gameStateMachine.Canvas_Ref;
         isDisplayingMessage = showMessage;
         if (!showMessage)
@@ -47,10 +51,14 @@ public class PlayState : IStateBase
         gameStateMachine.TurnOnCanvasSection(2);
     }
     public void PlayerInput(){
-        if(Input.GetKeyUp(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape) && gameStateMachine.IntroIsDone){
             gameStateMachine.ChangeState(
                 new PauseState(gameStateMachine));
            gameStateMachine.TurnOnCanvasSection(3);
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            gameStateMachine.FastWin();
         }
 
        
@@ -70,6 +78,12 @@ public class PlayState : IStateBase
             {
 
                 gameStateMachine.canvas_Ref.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
+            }
+
+            if (!gameStateMachine.isFirstGame)
+            {
+                gameStateMachine.playerOneSpawner_Ref.GetComponent<Spawner>().SpawnNext();
+                gameStateMachine.playerTwoSpawner_Ref.GetComponent<Spawner>().SpawnNext();
             }
 
             gameStateMachine.ToggleSpawners(true);

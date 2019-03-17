@@ -148,4 +148,9 @@ public class Bubble : MonoBehaviour
 
 
     }
+    public void DestroyMyself()
+    {
+        RemoveMeFromBubbleManagerList();
+        Destroy(gameObject);
+    }
 }

@@ -8,7 +8,6 @@ public class PrintText : MonoBehaviour
     private Text myText;
 
     private string currentStringToDisplay;
- 
 
     public bool amIPlayerOne;
     public string myString;
@@ -27,37 +26,77 @@ public class PrintText : MonoBehaviour
     private InGameUIManager inGameUIManager_Ref;
     private GameStateMachine gameStateMachine_Ref;
     private bool isFullMessageShown;
+    private bool inGameUIManagerRefOfMeIsSet;
     
-
-   
-    void Start()
+    private void SetReferencesAndStartValues()
     {
         gameStateMachine_Ref = GameStateMachine.GetInstance();
-
-        myText = GetComponent<Text>();
-      
-        charArrayIndex = 0;
-
-        if (amIPlayerOne || gameStateMachine_Ref.GameOver) canIPrint = true;
-     
-      
-        inGameUIManager_Ref = gameStateMachine_Ref.inGameUIManager_Ref;
-
-        if (amIPlayerOne)
+        if (GetComponent<Text>() != null)
         {
-            inGameUIManager_Ref.PlayerOnePrintText_Ref = this;
+            myText = GetComponent<Text>();
         }
         else
         {
-            inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+            Debug.Log("PrintText can't get a Text reference for the variable myText");
+        }
+        if (inGameUIManager_Ref == null)
+            inGameUIManager_Ref = InGameUIManager.GetInstance();
+
+        //Check if I can print right away, if I have to wait for 
+        //player one taunt text to print first or if the game is
+        //over and I can print at once.
+        if (amIPlayerOne || gameStateMachine_Ref.GameOver) canIPrint = true;
+        if (amIPlayerOne)
+        {
+            if (inGameUIManager_Ref.PlayerOnePrintText_Ref == null)
+            {
+                inGameUIManager_Ref.PlayerOnePrintText_Ref = this;
+                inGameUIManagerRefOfMeIsSet = true;
+            }
+        }
+        else
+        {
+           
+
+
+                if (inGameUIManager_Ref != null)
+                {
+                    inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+                    inGameUIManagerRefOfMeIsSet = true;
+                }
+                else
+                {
+                    inGameUIManager_Ref = InGameUIManager.GetInstance();
+
+                    if (inGameUIManager_Ref != null)
+                    {
+                        inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+                        inGameUIManagerRefOfMeIsSet = true;
+                    }
+                    else
+                    {
+                        Debug.Log("PrintText on: " + gameObject.name + ", is missing a value for inGameUIManager_Ref");
+                    }
+
+                }
+            
         }
 
-     
+        charArrayIndex = 0;
         isFullMessageShown = false;
-       
+        currentStringToDisplay = "";
+    }
+   
+   
+    void Start()
+    {
+        SetReferencesAndStartValues();
+    }
+    void OnEnable()
+    {
+       SetReferencesAndStartValues();
     }
 
-   
     void Update()
     {
         PrintLetters();
@@ -116,7 +155,7 @@ public class PrintText : MonoBehaviour
                 }
                 else
                 {
-                    Invoke("ImDone", 3.0f);
+                    gameStateMachine_Ref.WaitAndChangeToBeginState();
                 }
 
             }
@@ -130,10 +169,12 @@ public class PrintText : MonoBehaviour
             if (amIPlayerOne)
             {
                 inGameUIManager_Ref.PlayerTwoPrintText_Ref.canIPrint = true;
+                myString = "";
             }
             else
             {
                 gameStateMachine_Ref.IntroIsDone = true;
+                currentStringToDisplay = "";
                 gameStateMachine_Ref.TurnOffIntroTauntScreen();
             }
         }
@@ -141,6 +182,49 @@ public class PrintText : MonoBehaviour
         {
             gameStateMachine_Ref.ChangeState(new BeginState(gameStateMachine_Ref));
         }
+    }
+    private void SetMeAsReferenceToInGameUIManager()
+    {
+        if (!inGameUIManagerRefOfMeIsSet)
+        {
+            if (amIPlayerOne)
+            {
+                inGameUIManager_Ref.PlayerOnePrintText_Ref = this;
+                inGameUIManagerRefOfMeIsSet = true;
+            }
+            else
+            {
+                if (inGameUIManager_Ref != null)
+                {
+                    inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+
+                    inGameUIManagerRefOfMeIsSet = true;
+                }
+                else
+                {
+                    inGameUIManager_Ref = InGameUIManager.GetInstance();
+
+                    if (inGameUIManager_Ref != null)
+                    {
+                        inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+
+                        inGameUIManagerRefOfMeIsSet = true;
+                    }
+                    else
+                    {
+                        Debug.Log("PrintText on: " + gameObject.name + ", is missing a value for inGameUIManager_Ref");
+                    }
+
+                }
+
+            }
+        }
+    }
+    public void ClearMyString()
+    {
+        myText.text = "";
+        
+        currentStringToDisplay = "";
     }
   
 

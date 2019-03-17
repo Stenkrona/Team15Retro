@@ -22,6 +22,7 @@ public class ScoreScreenState : IStateBase
         {
             SetTextAndPicture(gameStateMachine_Ref.PlayerCharacterArray[1]);
         }
+        Debug.Log("ScoreScreen done!");
     }
 
     public void StateUpdate()
@@ -41,6 +42,7 @@ public class ScoreScreenState : IStateBase
     }
     private void SetTextAndPicture(PlayerCharacter playerCharacter)
     {
+
         GameObject scoreScreen_Ref = gameStateMachine_Ref.scoreScreen_Ref;
 
         scoreScreen_Ref.transform.GetChild(1).GetComponent<Image>().sprite =
