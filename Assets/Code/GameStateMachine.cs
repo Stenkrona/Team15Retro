@@ -25,9 +25,13 @@ public class GameStateMachine : MonoBehaviour
     public InGameUIManager inGameUIManager_Ref;
     public GameObject[] blockPrefab_Refs;
 
+    public PlayerInput playerOneInput_Ref;
+    public PlayerInput playerTwoInput_Ref;
+
     [Header("Settings")]
     public bool debugMode;
     public float timeToWaitBeforeScoreScreen;
+    public int gamesPlayedBeforeRefill;
 
     private IStateBase gameState;
 
@@ -42,6 +46,7 @@ public class GameStateMachine : MonoBehaviour
     private PlayerCharacter[] playerCharacterArray;
 
     private Object[] portrait_Refs;
+    private Object[] gamerTag_Refs;
     private Object[] introPhrases;
     private Object[] victoryPhrases;
 
@@ -51,6 +56,8 @@ public class GameStateMachine : MonoBehaviour
     private bool gameOver;
     private bool playerOneWon;  
     [HideInInspector] public bool isFirstGame { get; set; }
+
+    private int gamesPlayed;
 
     public static GameStateMachine GetInstance()
     {
@@ -71,12 +78,13 @@ public class GameStateMachine : MonoBehaviour
         isFirstGame = true;
 
         portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+        gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
         introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
         victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
 
-        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
-        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
-        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter};
 
 
     }
@@ -127,6 +135,8 @@ public class GameStateMachine : MonoBehaviour
 
         playerOneBlocksCollected = new bool[7];
         playerTwoBlocksCollected = new bool[7];
+
+       if(gamesPlayedBeforeRefill == 0) { gamesPlayedBeforeRefill = 28; }
 
     }
 
@@ -327,10 +337,21 @@ public class GameStateMachine : MonoBehaviour
 
         if (playerInfoTwo_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
+        
+        //when games played are more than the gamesPlayedBeforeRefill this
+        //if statemant will refill the arrays that hold portraits and phrases.
+        if (gamesPlayed > gamesPlayedBeforeRefill)
+        {
+            portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+            gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
+            introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
+            victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
 
+            gamesPlayed = -1;
+        }
 
-        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
-        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases);
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
         playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
 
         playerOneBlocksCollected = new bool[7];
@@ -342,8 +363,8 @@ public class GameStateMachine : MonoBehaviour
         inGameUIManager_Ref.UpdatePlayerDisplays();
         inGameText_Ref.text = "Get Ready!";
         RefillSpawners();
-        
-        
+
+        gamesPlayed++;
 
     }
 
