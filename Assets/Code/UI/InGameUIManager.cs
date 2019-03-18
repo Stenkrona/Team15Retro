@@ -10,6 +10,8 @@ public class InGameUIManager : MonoBehaviour
 
     public Image playerOneIntroTauntImage_Ref;
     public Image playerTwoIntroTauntImage_Ref;
+    public Text playerOneGamerTagDisplay_Ref;
+    public Text playerTwoGamerTagDisplay_Ref;
     public GameObject playerOneCollectedBlocks_Ref;
     public GameObject playerTwoCollectedBlocks_Ref;
 
@@ -58,8 +60,11 @@ public class InGameUIManager : MonoBehaviour
     }
     private void FirstUIUpdate()
     {
-        playerOneInfo_Ref.playerNameDisplay.text = "Player One";
-        playerTwoInfo_Ref.playerNameDisplay.text = "Player Two";
+        playerOneGamerTagDisplay_Ref.text = gameStateMachine_Ref.PlayerCharacterArray[0].MyGamerTag;
+        playerTwoGamerTagDisplay_Ref.text = gameStateMachine_Ref.PlayerCharacterArray[1].MyGamerTag;
+
+        playerOneInfo_Ref.playerNameDisplay.text = gameStateMachine_Ref.PlayerCharacterArray[0].MyGamerTag;
+        playerTwoInfo_Ref.playerNameDisplay.text = gameStateMachine_Ref.PlayerCharacterArray[1].MyGamerTag;
 
         playerOneIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
         playerTwoIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
@@ -98,10 +103,20 @@ public class InGameUIManager : MonoBehaviour
     public void UpdatePlayerDisplays()
     {
 
+
+
+        if(playerOneInfo_Ref != null && playerTwoInfo_Ref != null)
+        {
+            playerOneInfo_Ref.playerNameDisplay.text = gameStateMachine_Ref.PlayerCharacterArray[0].MyGamerTag;
+            playerTwoInfo_Ref.playerNameDisplay.text = gameStateMachine_Ref.PlayerCharacterArray[1].MyGamerTag;
+        }
+
         if (gameStateMachine_Ref != null)
         {
             playerOneIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
             playerTwoIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
+            playerOneGamerTagDisplay_Ref.text = gameStateMachine_Ref.PlayerCharacterArray[0].MyGamerTag;
+            playerTwoGamerTagDisplay_Ref.text = gameStateMachine_Ref.PlayerCharacterArray[1].MyGamerTag;
         }
 
         if (playerOnePrintText_Ref != null)
