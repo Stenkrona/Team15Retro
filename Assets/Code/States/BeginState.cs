@@ -53,6 +53,12 @@ public class BeginState : IStateBase
             new MainMenuState(gameStateMachine));
           
         }
+        if (Input.GetKey(gameStateMachine.playerOneInput_Ref.upThruster) ||
+            Input.GetKey(gameStateMachine.playerTwoInput_Ref.upThruster))
+        {
+            gameStateMachine.ChangeState(
+          new MainMenuState(gameStateMachine));
+        }
     }
     private void TimeCounter(){
         timeBeingActive += Time.deltaTime;

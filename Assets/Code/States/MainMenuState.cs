@@ -47,6 +47,12 @@ public class MainMenuState : IStateBase
         }
         if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
 
+        if(Input.GetKeyDown(gameStateMachine.playerOneInput_Ref.upThruster) ||
+            Input.GetKeyDown(gameStateMachine.playerTwoInput_Ref.upThruster))
+        {
+            gameStateMachine.ChangeState(new PlayState(gameStateMachine, true));
+        }
+
     }
     private void TimeTracker()
     {
