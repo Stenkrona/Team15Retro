@@ -13,6 +13,8 @@ public class Spawner : MonoBehaviour
     public GameObject[] groups;
     GameObject instanceGroup;
 
+    private GameObject playerParent;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class Spawner : MonoBehaviour
 
                 instanceController.input = playerInput;
                 instanceController.thrusterPower = thrustPower;
+                instanceController.gameObject.transform.parent = playerParent.transform;
 
             }
             else
@@ -59,4 +62,19 @@ public class Spawner : MonoBehaviour
             }
         
     }
+    public void RemoveRemainingBlocks()
+    {
+        int limit = transform.parent.childCount;
+
+        for (int i = 0; i < limit; i++)
+        {
+            if(transform.parent.GetChild(i) != null &&
+               transform.parent.GetChild(i).GetComponent<PlayerController>() != null)
+            {
+                Destroy(transform.parent.GetChild(i).gameObject);
+            }
+        }
+    }
+
+    public GameObject PlayerParent { set { playerParent = value; } }
 }

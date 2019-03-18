@@ -129,7 +129,8 @@ public class GameStateMachine : MonoBehaviour
         if (playerInfoTwo_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
 
-
+        playerOneSpawner_Ref.GetComponent<Spawner>().PlayerParent = playerOneParent_Ref;
+        playerTwoSpawner_Ref.GetComponent<Spawner>().PlayerParent = playerTwoParent_Ref;
 
         gameState.ShowIt();
 
@@ -363,6 +364,9 @@ public class GameStateMachine : MonoBehaviour
         inGameUIManager_Ref.UpdatePlayerDisplays();
         inGameText_Ref.text = "Get Ready!";
         RefillSpawners();
+
+        playerOneSpawner_Ref.GetComponent<Spawner>().RemoveRemainingBlocks();
+        playerTwoSpawner_Ref.GetComponent<Spawner>().RemoveRemainingBlocks();
 
         gamesPlayed++;
 
