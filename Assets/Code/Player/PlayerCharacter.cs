@@ -6,15 +6,16 @@ public class PlayerCharacter
 {
     
     private Sprite myPicture;
-
+    private string myGamerTag;
     private string myIntroPhrase;
     private string myVictoryPhrase;
 
-    public PlayerCharacter(Object[] portraits, Object[] introPhrase, Object[] victoryPhrase)
+    public PlayerCharacter(Object[] portraits, Object[] introPhrase, Object[] victoryPhrase, Object[] gamerTag)
     {
         myPicture = SetMyPicture(portraits);
         myIntroPhrase = SetMyPhrase(introPhrase);
         myVictoryPhrase = SetMyPhrase(victoryPhrase);
+        myGamerTag = SetMyPhrase(gamerTag);
     }
     private Sprite SetMyPicture(Object[] portraits)
     {
@@ -62,6 +63,7 @@ public class PlayerCharacter
     public Sprite MyPicture { get { return myPicture; } }
     public string MyIntroPhrase { get { return myIntroPhrase; } }
     public string MyVictoryPhrase { get { return myVictoryPhrase; } }
+    public string MyGamerTag { get { return myGamerTag; } }
 
 
 
