@@ -13,11 +13,13 @@ public class Bubble : MonoBehaviour
     [HideInInspector] public BubbleManager bubbleManager_Ref;
     [HideInInspector] public float elevationSpeed;
     [HideInInspector] public GameStateMachine gameStateMachine_Ref;
+    [HideInInspector] public GameObject bubblePopPrefab_Ref;
 
     private bool hasCaughtTetrisBlock;
     private GameObject myCaugtBlock;
     private float bobSpeed = 1;
     private float bobTimeTracker;
+    private float difficultyMultiplier;
 
     void Start()
     {
@@ -41,11 +43,13 @@ public class Bubble : MonoBehaviour
                 
                 if (isMovingLeft)
                 {
-                    transform.Translate(Vector2.left * Time.deltaTime * movementSpeed);
+                    transform.Translate(Vector2.left * Time.deltaTime * movementSpeed * 
+                        difficultyMultiplier);
                 }
                 else
                 {
-                    transform.Translate(Vector2.right * Time.deltaTime * movementSpeed);
+                    transform.Translate(Vector2.right * Time.deltaTime * movementSpeed * 
+                        difficultyMultiplier);
                 }
             }
             else
@@ -57,6 +61,7 @@ public class Bubble : MonoBehaviour
                     RemoveMeFromBubbleManagerList();
                     SetBlockParent();
                     SetBlockToDynamic(myCaugtBlock);
+                    SpawnBubblePop();
                     Destroy(gameObject);
                 }
             }
@@ -153,4 +158,11 @@ public class Bubble : MonoBehaviour
         RemoveMeFromBubbleManagerList();
         Destroy(gameObject);
     }
+    private void SpawnBubblePop()
+    {
+        Instantiate(bubblePopPrefab_Ref, transform.position, Quaternion.identity);
+    }
+
+    //properties
+    public float DifficultyMultiplier { set { difficultyMultiplier = value; } }
 }

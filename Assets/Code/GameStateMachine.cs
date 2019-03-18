@@ -32,7 +32,7 @@ public class GameStateMachine : MonoBehaviour
     public bool debugMode;
     public float timeToWaitBeforeScoreScreen;
     public int gamesPlayedBeforeRefill;
-
+   
     private IStateBase gameState;
 
 
@@ -54,7 +54,10 @@ public class GameStateMachine : MonoBehaviour
     private bool[] playerTwoBlocksCollected;
     private bool introIsDone;
     private bool gameOver;
-    private bool playerOneWon;  
+    private bool playerOneWon;
+    private int playerOneBlocksLanded;
+    private int playerTwoBlocksLanded;
+
     [HideInInspector] public bool isFirstGame { get; set; }
 
     private int gamesPlayed;
@@ -138,7 +141,7 @@ public class GameStateMachine : MonoBehaviour
         playerTwoBlocksCollected = new bool[7];
 
        if(gamesPlayedBeforeRefill == 0) { gamesPlayedBeforeRefill = 28; }
-
+        inGameUIManager_Ref.UpdatePlayerStatus(WhoIsInTheLead());
     }
 
     void Update()
@@ -218,12 +221,16 @@ public class GameStateMachine : MonoBehaviour
         {
             playerOneBlocksCollected[blockCollected] = true;
             inGameUIManager_Ref.ActivateImage(true, blockCollected);
+            playerOneBlocksLanded++;
         }
         else
         {
             playerTwoBlocksCollected[blockCollected] = true;
             inGameUIManager_Ref.ActivateImage(false, blockCollected);
+            playerTwoBlocksLanded++;
         }
+
+        inGameUIManager_Ref.UpdatePlayerStatus(WhoIsInTheLead());
 
         return CheckIfSomeoneWon();
     }
@@ -356,7 +363,9 @@ public class GameStateMachine : MonoBehaviour
         playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
 
         playerOneBlocksCollected = new bool[7];
+        playerOneBlocksLanded = 0;
         playerTwoBlocksCollected = new bool[7];
+        playerTwoBlocksLanded = 0;
         gameOver = false;
         playerOneWon = false;
         introIsDone = false;
@@ -367,6 +376,8 @@ public class GameStateMachine : MonoBehaviour
 
         playerOneSpawner_Ref.GetComponent<Spawner>().RemoveRemainingBlocks();
         playerTwoSpawner_Ref.GetComponent<Spawner>().RemoveRemainingBlocks();
+
+        inGameUIManager_Ref.UpdatePlayerStatus(WhoIsInTheLead());
 
         gamesPlayed++;
 
@@ -419,6 +430,22 @@ public class GameStateMachine : MonoBehaviour
         ChangeState(new BeginState(this));
     }
 
+    public int WhoIsInTheLead()
+    {
+        if(playerOneBlocksLanded > PlayerTwoBlocksLanded)
+        {
+            return 1;
+        }
+        else if(playerOneBlocksLanded < PlayerTwoBlocksLanded)
+        {
+            return 2;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     // properties
     public GameObject Canvas_Ref {get {return canvas_Ref;}}
     public BubbleManager BubbleManager_Ref { set { bubbleManager_Ref = value; } get { return bubbleManager_Ref; } }
@@ -426,6 +453,7 @@ public class GameStateMachine : MonoBehaviour
     public bool IntroIsDone { get { return introIsDone; } set { introIsDone = value; } }
     public bool PlayerOneWon { get { return playerOneWon; } }
     public bool GameOver { get { return gameOver; } }
-   
+    public int PlayerOneBlocksLanded { get { return playerOneBlocksLanded; } }
+    public int PlayerTwoBlocksLanded { get { return playerTwoBlocksLanded; } }
 
 }
