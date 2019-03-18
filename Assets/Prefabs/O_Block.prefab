@@ -330,11 +330,10 @@ GameObject:
   m_Component:
   - component: {fileID: 42106454753693187}
   - component: {fileID: 42106454753693186}
-  - component: {fileID: 42106454753693185}
   - component: {fileID: 5032291359566772796}
   - component: {fileID: 3025148915341856496}
   m_Layer: 0
-  m_Name: TestSquare
+  m_Name: O_Block
   m_TagString: block2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -380,25 +379,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &42106454753693185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 42106454753693184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8291e726a6d65004396fa98ded651850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thrusterPower: 1000
-  rotateSpeed: 100
-  input: {fileID: 11400000, guid: 65e15d1fd91ca964ba91b014c67e7cef, type: 2}
-  upThrusterParticle: {fileID: 42106453538184513}
-  downThrusterParticle: {fileID: 8651050764529681612}
-  leftThrusterParticle: {fileID: 8651050764643516948}
-  rightThrusterParticle: {fileID: 8651050763362853599}
 --- !u!61 &5032291359566772796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -513,12 +493,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 42106453372119447}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8651050764529681612 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 42106453372119447}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &42106453743644495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -594,12 +568,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 42106453743644495}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8651050764643516948 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 42106453743644495}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &42106454618640260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -672,12 +640,6 @@ PrefabInstance:
 --- !u!4 &8651050763362853596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 42106454618640260}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8651050763362853599 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 42106454618640260}
   m_PrefabAsset: {fileID: 0}
@@ -838,12 +800,6 @@ PrefabInstance:
 --- !u!4 &42106453538184514 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8651050764496793626}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &42106453538184513 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8690578721345039707, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
     type: 3}
   m_PrefabInstance: {fileID: 8651050764496793626}
   m_PrefabAsset: {fileID: 0}
