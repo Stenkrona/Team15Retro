@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D playerRigidBody;
     private Transform playerTransform;
-    public float thrusterPower = 1000;
+    public float thrusterPower = 200;
     public float rotateSpeed = 100;
     public PlayerInput input;
     public ParticleSystem upThrusterParticle;
@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
         if (gameObject.GetComponent<Transform>())
             playerTransform = gameObject.GetComponent<Transform>();
         GetThrusterParticleSystems();
-        if (thrusterPower == 0) thrusterPower = 500;
+        if (thrusterPower == 0)
+            thrusterPower = 200;
     }
     void FixedUpdate()
     {
@@ -51,46 +52,33 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(input.upThruster))
+        if (Input.GetKeyDown(input.upThruster) && upThrusterParticle)
             upThrusterParticle.Play();
-        if (Input.GetKeyUp(input.upThruster))
+        if (Input.GetKeyUp(input.upThruster) && upThrusterParticle.isPlaying)
             upThrusterParticle.Stop();
-        if (Input.GetKeyDown(input.downThruster))
+        if (Input.GetKeyDown(input.downThruster) && downThrusterParticle)
             downThrusterParticle.Play();
-        if (Input.GetKeyUp(input.downThruster))
+        if (Input.GetKeyUp(input.downThruster) && downThrusterParticle.isPlaying)
             downThrusterParticle.Stop();
-        if (Input.GetKeyDown(input.leftThurster))
+        if (Input.GetKeyDown(input.leftThurster) && leftThrusterParticle)
             leftThrusterParticle.Play();
-        if (Input.GetKeyUp(input.leftThurster))
+        if (Input.GetKeyUp(input.leftThurster) && leftThrusterParticle.isPlaying)
             leftThrusterParticle.Stop();
-        if (Input.GetKeyDown(input.rightThurster))
+        if (Input.GetKeyDown(input.rightThurster) && rightThrusterParticle)
             rightThrusterParticle.Play();
-        if (Input.GetKeyUp(input.rightThurster))
+        if (Input.GetKeyUp(input.rightThurster) && rightThrusterParticle.isPlaying)
             rightThrusterParticle.Stop();
     }
     private void GetThrusterParticleSystems()
     {
         if(upThrusterParticle == null)
-        {
-            upThrusterParticle = transform.GetChild(3).GetChild(0)
-                .GetComponent<ParticleSystem>();
-        }
+            upThrusterParticle = transform.GetChild(3).GetChild(0).GetComponent<ParticleSystem>();
         if(downThrusterParticle == null)
-        {
-            downThrusterParticle = transform.GetChild(1).GetChild(0)
-                .GetComponent<ParticleSystem>();
-        }
+            downThrusterParticle = transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
         if(leftThrusterParticle == null)
-        {
-            leftThrusterParticle = transform.GetChild(0).GetChild(0)
-                .GetComponent<ParticleSystem>();
-        }
+            leftThrusterParticle = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
         if(rightThrusterParticle == null)
-        {
-            rightThrusterParticle = transform.GetChild(2).GetChild(0)
-                .GetComponent<ParticleSystem>();
-        }
-            
+            rightThrusterParticle = transform.GetChild(2).GetChild(0).GetComponent<ParticleSystem>();
     }
 }
 
