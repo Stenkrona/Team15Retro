@@ -51,7 +51,8 @@ public class PlayState : IStateBase
         gameStateMachine.TurnOnCanvasSection(2);
     }
     public void PlayerInput(){
-        if(Input.GetKeyDown(KeyCode.Escape) && gameStateMachine.IntroIsDone){
+        if(Input.GetKeyDown(KeyCode.Escape) && gameStateMachine.IntroIsDone)
+        {
             gameStateMachine.ChangeState(
                 new PauseState(gameStateMachine));
            gameStateMachine.TurnOnCanvasSection(3);
