@@ -9,8 +9,11 @@ public class PlayerInfoUI : MonoBehaviour
 
 
     public Text playerNameDisplay;
+    
   
     public Image playerPortraitDisplay;
+
+    public Text playerStatusDisplay;
 
     public bool amIPlayerOne;
 

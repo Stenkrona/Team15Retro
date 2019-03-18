@@ -133,6 +133,30 @@ public class InGameUIManager : MonoBehaviour
             PlayerTwoPrintText_Ref.ClearMyString();
         }
     }
+    public void UpdatePlayerStatus(int i)
+    {
+        if (playerOneInfo_Ref != null && playerTwoInfo_Ref != null)
+        {
+
+            switch (i)
+            {
+                case 0:
+                    playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
+                    playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
+                    break;
+                case 1:
+                    playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
+                    playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
+                    break;
+                case 2:
+                    playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
+                    playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
+                    break;
+
+            }
+        }
+
+    }
 
     
     //properties

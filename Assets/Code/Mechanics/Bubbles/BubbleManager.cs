@@ -15,6 +15,8 @@ public class BubbleManager : MonoBehaviour
     public int maxBubblesInPlay;
     public float minLengthTweenYValues;
     public bool alternateSpawningSide;
+    public float difficultyMultiplierInterval;
+    public GameObject bubblePopPrefab_Ref;
 
     [Header("Bubble Properties")]
     public GameObject bubblePrefab_Ref;
@@ -42,6 +44,9 @@ public class BubbleManager : MonoBehaviour
     private bool isSpawningRightSide;
     private float deSpawnZone;
     private bool hasSpawnedLeftSide;
+
+    private float playerOneDifficultyMultiplier;
+    private float playerTwoDifficultyMultiplier;
 
     public static BubbleManager GetInstance()
     {
@@ -79,6 +84,7 @@ public class BubbleManager : MonoBehaviour
         if (noSpawnUpperBuffer == 0) noSpawnUpperBuffer = 1;
         if (noSpawnLowerBuffer == 0) noSpawnLowerBuffer = 1;
         if (minLengthTweenYValues == 0) minLengthTweenYValues = 1;
+        if (difficultyMultiplierInterval == 0) difficultyMultiplierInterval = 0.2f;
        
     }
 
@@ -190,17 +196,20 @@ public class BubbleManager : MonoBehaviour
             tempBubble_Ref.gameStateMachine_Ref = gameStateMachine_Ref;
             tempBubble_Ref.movementSpeed = bubbleMovementSpeed;
             tempBubble_Ref.elevationSpeed = bubbleElevationSpeed;
+            tempBubble_Ref.bubblePopPrefab_Ref = bubblePopPrefab_Ref;
 
             if (playerOneSide)
             {
                 bubblesOnPlayerOnesSide.Add(tempBubbleGameObjcet);
                 tempBubble_Ref.isOnPlayerOneSide = true;
+                tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(true);
 
 
             }
             else
             {
                 bubblesOnPlayerTwosSide.Add(tempBubbleGameObjcet);
+                tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(false);
             }
         }
         else
@@ -409,7 +418,21 @@ public class BubbleManager : MonoBehaviour
         bubblesOnPlayerTwosSide = new List<GameObject>();
 
     }
-    
+    public float GetDifficultyMultiplier(bool playerOne)
+    {
+        if (playerOne)
+        {
+            return (1.0f + (float)gameStateMachine_Ref.PlayerOneBlocksLanded)
+                * 0.2f;
+        }
+        else
+        {
+            return (1.0f + (float)gameStateMachine_Ref.PlayerTwoBlocksLanded)
+               * 0.2f;
+        }
+    }
+
+
     //properties
     public List<GameObject> BubblesOnPlayerOnesSide
     { get { return bubblesOnPlayerOnesSide; }
