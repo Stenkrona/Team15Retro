@@ -69,13 +69,21 @@ public class InGameUIManager : MonoBehaviour
         playerOneIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
         playerTwoIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
 
-        playerOnePrintText_Ref.ClearMyString();
-        playerOnePrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[0].MyIntroPhrase;
-        playerOnePrintText_Ref.MakeCharArray();
 
-        PlayerTwoPrintText_Ref.ClearMyString();
-        playerTwoPrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[1].MyIntroPhrase;
-        PlayerTwoPrintText_Ref.MakeCharArray();
+        if (playerOnePrintText_Ref != null)
+        {
+            playerOnePrintText_Ref.ClearMyString();
+            playerOnePrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[0].MyIntroPhrase;
+            playerOnePrintText_Ref.MakeCharArray();
+        }
+
+        if (playerTwoPrintText_Ref != null)
+        {
+            PlayerTwoPrintText_Ref.ClearMyString();
+            playerTwoPrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[1].MyIntroPhrase;
+            PlayerTwoPrintText_Ref.MakeCharArray();
+        }
+        
        
 
     }
@@ -141,16 +149,31 @@ public class InGameUIManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
+                    if (playerOneInfo_Ref.playerStatusDisplay != null &&
+                        playerTwoInfo_Ref.playerStatusDisplay != null)
+                    {
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
+                    }
                     break;
                 case 1:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
+                    if (playerOneInfo_Ref.playerStatusDisplay != null &&
+                       playerTwoInfo_Ref.playerStatusDisplay != null)
+                    {
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
+                    }
                     break;
                 case 2:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
+                    if (playerOneInfo_Ref.playerStatusDisplay != null &&
+                       playerTwoInfo_Ref.playerStatusDisplay != null)
+                    {
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
+                    }
+                    break;
+
+                default:
                     break;
 
             }

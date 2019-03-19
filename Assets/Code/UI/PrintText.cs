@@ -85,6 +85,22 @@ public class PrintText : MonoBehaviour
         charArrayIndex = 0;
         isFullMessageShown = false;
         currentStringToDisplay = "";
+
+        if (myString == "")
+        {
+            if (amIPlayerOne)
+            {
+                myString = gameStateMachine_Ref.PlayerCharacterArray[0].MyIntroPhrase;
+                
+            }
+            else
+            {
+                myString = gameStateMachine_Ref.PlayerCharacterArray[1].MyIntroPhrase;
+            }
+
+            MakeCharArray();
+
+        }
     }
    
    
