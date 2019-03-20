@@ -137,22 +137,24 @@ public class InGameUIManager : MonoBehaviour
     {
         if (playerOneInfo_Ref != null && playerTwoInfo_Ref != null)
         {
-
-            switch (i)
+            if (playerOneInfo_Ref.playerStatusDisplay != null && playerTwoInfo_Ref.playerStatusDisplay != null)
             {
-                case 0:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
-                    break;
-                case 1:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
-                    break;
-                case 2:
-                    playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
-                    playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
-                    break;
+                switch (i)
+                {
+                    case 0:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
+                        break;
+                    case 1:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
+                        break;
+                    case 2:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
+                        break;
 
+                }
             }
         }
 

@@ -158,5 +158,8 @@ public class Lander_I : MonoBehaviour
             reSpawnCooldownTracker += Time.deltaTime;  
         }
     
-
+    private void poop()
+    {
+        gameStateMachine_Ref.CrashedBlock(amIPlayerOne);
+    }
 }
