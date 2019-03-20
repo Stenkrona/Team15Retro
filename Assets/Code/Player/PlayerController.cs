@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem downThrusterParticle;
     public ParticleSystem leftThrusterParticle;
     public ParticleSystem rightThrusterParticle;
+    [HideInInspector] public Vector2 velocity;
 
     private void Start()
     {
@@ -68,6 +69,9 @@ public class PlayerController : MonoBehaviour
             rightThrusterParticle.Play();
         if (Input.GetKeyUp(input.rightThurster) && rightThrusterParticle.isPlaying)
             rightThrusterParticle.Stop();
+
+        velocity = playerRigidBody.velocity;
+        Debug.Log(velocity);
     }
     private void GetThrusterParticleSystems()
     {
