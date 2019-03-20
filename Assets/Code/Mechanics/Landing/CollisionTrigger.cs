@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CollisionTrigger : MonoBehaviour
+public class Lander_I : MonoBehaviour
 {
     ParticleSystem particleCrash;
 
