@@ -58,7 +58,7 @@ public class TestLander : MonoBehaviour
 
             //float zValue = blockRotation.eulerAngles.z;
 
-            if (collision.gameObject.name == "T_Block")
+            if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == BlockType.T)
             {
 
                 if (blockRotation.eulerAngles.z < 2f || blockRotation.eulerAngles.z > 350f)

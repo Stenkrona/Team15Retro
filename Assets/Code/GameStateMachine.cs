@@ -213,7 +213,10 @@ public class GameStateMachine : MonoBehaviour
             return new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
         }
     }
+    public void CrashedBlock(bool isPlayerOne)
+    {
 
+    }
     public bool Collected(bool isPlayerOne, int blockCollected)
     {
 
