@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem downThrusterParticle;
     public ParticleSystem leftThrusterParticle;
     public ParticleSystem rightThrusterParticle;
-    [HideInInspector] public Vector2 velocity;
+    [HideInInspector] public float velocity;
 
     private void Start()
     {
@@ -50,6 +50,10 @@ public class PlayerController : MonoBehaviour
             float xAxisValue = Input.GetAxis(input.horizontalAxis);
             playerTransform.Rotate(new Vector3(0, 0, -xAxisValue * rotateSpeed * Time.deltaTime));
         }
+        velocity = playerRigidBody.velocity.magnitude;
+        Debug.Log(velocity);
+        
+
     }
     private void Update()
     {
@@ -70,8 +74,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(input.rightThurster) && rightThrusterParticle.isPlaying)
             rightThrusterParticle.Stop();
 
-        velocity = playerRigidBody.velocity;
-        Debug.Log(velocity);
     }
     private void GetThrusterParticleSystems()
     {
