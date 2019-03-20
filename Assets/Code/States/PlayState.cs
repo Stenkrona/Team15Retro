@@ -10,6 +10,7 @@ public class PlayState : IStateBase
     private bool debugMode;
     private float timeBeingActive;
     private bool isDisplayingMessage;
+    private SkipButton skipButton_Ref;
     
 
     private bool hasShownMessage;
@@ -28,6 +29,9 @@ public class PlayState : IStateBase
             gameStateMachine_Ref.introTauntScreen_Ref.SetActive(true);
         }
             canvas_ref = gameStateMachine.Canvas_Ref;
+
+       
+
         isDisplayingMessage = showMessage;
         if (!showMessage)
         {
@@ -42,10 +46,26 @@ public class PlayState : IStateBase
 
     public void StateUpdate()
     {
+        if(GameObject.Find("Skip") != null && skipButton_Ref == null)
+        {
+            skipButton_Ref = GameObject.Find("Skip").GetComponent<SkipButton>();
+        }
         TimeTracker();
 
         if(!isDisplayingMessage) PlayerInput();
-      
+
+        if (Input.GetKeyDown(gameStateMachine.playerOneInput_Ref.upThruster)
+           && !gameStateMachine.IntroIsDone)
+        {
+          
+            skipButton_Ref.IsButtonPressed(true);
+        }
+        else if (Input.GetKeyUp(gameStateMachine.playerOneInput_Ref.upThruster)
+            && !gameStateMachine.IntroIsDone)
+        {
+            skipButton_Ref.IsButtonPressed(false);
+        }
+
     }
     public void ShowIt(){
         gameStateMachine.TurnOnCanvasSection(2);
@@ -61,9 +81,11 @@ public class PlayState : IStateBase
         {
             gameStateMachine.FastWin();
         }
-
        
-        
+
+
+
+
     }
     private void TimeTracker()
     {
