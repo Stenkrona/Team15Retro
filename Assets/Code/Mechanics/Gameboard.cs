@@ -81,7 +81,16 @@ public class Gameboard : MonoBehaviour
             playerOneOutlineColor = SetAlpha(true);
             playerTwoOutlineColor = SetAlpha(false);
 
-            playerOneLanderTracked.transform.GetChild(1).GetComponent<SpriteRenderer>().color = playerOneOutlineColor;
+            if (playerOneLanderTracked != null)
+            {
+                playerOneLanderTracked.transform.GetChild(1).GetComponent<SpriteRenderer>().color =
+                    playerOneOutlineColor;
+            }
+            if(playerTwoLanderTracked != null)
+            {
+                playerTwoLanderTracked.transform.GetChild(1).GetComponent<SpriteRenderer>().color =
+                    playerTwoOutlineColor;
+            }
         }
       
     }

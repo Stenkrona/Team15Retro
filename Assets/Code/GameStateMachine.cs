@@ -62,6 +62,8 @@ public class GameStateMachine : MonoBehaviour
     private int playerTwoBlocksLanded;
 
     [HideInInspector] public bool isFirstGame { get; set; }
+    [HideInInspector] public Vector2 playerOneSpawnPosition;
+    [HideInInspector] public Vector2 playerTwoSpawnPosition;
 
     private int gamesPlayed;
 
@@ -212,9 +214,9 @@ public class GameStateMachine : MonoBehaviour
 
             float middleX = Mathf.Abs((topLeftX - topRightX) / 2) - topRightX;
 
-            Vector2 vectorToReturn = new Vector2(middleX * -1, bubbleManager_Ref.p2_LeftTop.y);
+            Vector2 vectorToReturn = new Vector2(middleX * -1, bubbleManager_Ref.p2_LeftTop.y -1.5f);
 
-            gameboard_Ref.SpawnerOneSpawnPosition = vectorToReturn;
+            playerOneSpawnPosition = vectorToReturn;
 
             return vectorToReturn;
         }
@@ -225,9 +227,9 @@ public class GameStateMachine : MonoBehaviour
 
             float middleX = Mathf.Abs((topLeftX - topRightX) / 2) + topLeftX;
 
-            Vector2 vectorToReturn = new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
+            Vector2 vectorToReturn = new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y - 1.5f);
 
-            gameboard_Ref.SpawnerTwoSpawnPosition = vectorToReturn;
+            playerTwoSpawnPosition = vectorToReturn;
 
             return vectorToReturn;
         }
