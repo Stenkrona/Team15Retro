@@ -133,6 +133,32 @@ public class InGameUIManager : MonoBehaviour
             PlayerTwoPrintText_Ref.ClearMyString();
         }
     }
+    public void UpdatePlayerStatus(int i)
+    {
+        if (playerOneInfo_Ref != null && playerTwoInfo_Ref != null)
+        {
+            if (playerOneInfo_Ref.playerStatusDisplay != null && playerTwoInfo_Ref.playerStatusDisplay != null)
+            {
+                switch (i)
+                {
+                    case 0:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Tie";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Tie";
+                        break;
+                    case 1:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Winning";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Losing";
+                        break;
+                    case 2:
+                        playerOneInfo_Ref.playerStatusDisplay.text = "Losing";
+                        playerTwoInfo_Ref.playerStatusDisplay.text = "Winning";
+                        break;
+
+                }
+            }
+        }
+
+    }
 
     
     //properties
@@ -141,6 +167,9 @@ public class InGameUIManager : MonoBehaviour
     public PrintText PlayerOnePrintText_Ref { get { return playerOnePrintText_Ref; }
         set { playerOnePrintText_Ref = value; } }
     public PrintText PlayerTwoPrintText_Ref { get { return playerTwoPrintText_Ref; }
-        set { playerTwoPrintText_Ref = value; }
-    }
+        set { playerTwoPrintText_Ref = value; }}
+    public PlayerInfoUI PlayerOneInfo_Ref { get { return playerOneInfo_Ref; }
+        set { playerOneInfo_Ref = value; } }
+    public PlayerInfoUI PlayerTwoInfo_Ref { get { return playerTwoInfo_Ref; }
+        set { playerTwoInfo_Ref = value; } }
 }

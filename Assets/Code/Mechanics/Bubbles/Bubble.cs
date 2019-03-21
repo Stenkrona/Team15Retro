@@ -13,17 +13,35 @@ public class Bubble : MonoBehaviour
     [HideInInspector] public BubbleManager bubbleManager_Ref;
     [HideInInspector] public float elevationSpeed;
     [HideInInspector] public GameStateMachine gameStateMachine_Ref;
+    [HideInInspector] public GameObject bubblePopPrefab_Ref;
 
     private bool hasCaughtTetrisBlock;
+    private bool hasChangedSprite;
     private GameObject myCaugtBlock;
     private float bobSpeed = 1;
     private float bobTimeTracker;
+    private float difficultyMultiplier;
+    private SpriteRenderer mySpriteRenderer;
+
+    private float spriteSwitchTimeInterval;
+    private float spriteSwitchTracker;
+
+    private Sprite floatBubbleSprite_Ref;
+    private Sprite movingBubbleSprite01_Ref;
+    private Sprite movingBubbleSprite02_Ref;
 
     void Start()
     {
         if (movementSpeed == 0) movementSpeed = 5;
         if (elevationSpeed == 0) elevationSpeed = 3;
+        if (spriteSwitchTimeInterval == 0) spriteSwitchTimeInterval = 0.3f;
         if (gameStateMachine_Ref == null) gameStateMachine_Ref = GameStateMachine.GetInstance();
+
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
+
+        mySpriteRenderer.sprite = movingBubbleSprite01_Ref;
+
+        FlipSpriteRenderer();
     }
 
     void Update()
@@ -38,18 +56,21 @@ public class Bubble : MonoBehaviour
         {
             if (!hasCaughtTetrisBlock)
             {
-                
-                if (isMovingLeft)
-                {
-                    transform.Translate(Vector2.left * Time.deltaTime * movementSpeed);
-                }
-                else
-                {
-                    transform.Translate(Vector2.right * Time.deltaTime * movementSpeed);
-                }
+
+                ChangeSpriteAnimation();
+                    transform.Translate(GetDirection() * Time.deltaTime * movementSpeed * 
+                        difficultyMultiplier);
+              
             }
             else
             {
+                if (!hasChangedSprite)
+                {
+                    GetComponent<SpriteRenderer>().sprite = floatBubbleSprite_Ref;
+                    hasChangedSprite = true;
+                }
+
+
                 transform.Translate(Vector2.up * Time.deltaTime * elevationSpeed);
 
                 if(transform.position.y >= bubbleManager_Ref.p1_LeftTop.y - 2.0f)
@@ -57,6 +78,7 @@ public class Bubble : MonoBehaviour
                     RemoveMeFromBubbleManagerList();
                     SetBlockParent();
                     SetBlockToDynamic(myCaugtBlock);
+                    SpawnBubblePop();
                     Destroy(gameObject);
                 }
             }
@@ -65,12 +87,12 @@ public class Bubble : MonoBehaviour
 
     private void CheckDeSpawn()
     {
-        if (isMovingLeft && transform.position.x < myDeSpawnValue)
+        if (isMovingLeft && transform.position.x - .35 < myDeSpawnValue)
         {
             RemoveMeFromBubbleManagerList();
             Destroy(gameObject);
         }
-        else if(!isMovingLeft && transform.position.x > myDeSpawnValue)
+        else if(!isMovingLeft && transform.position.x + .35 > myDeSpawnValue)
         {
             RemoveMeFromBubbleManagerList();
             Destroy(gameObject);
@@ -153,4 +175,62 @@ public class Bubble : MonoBehaviour
         RemoveMeFromBubbleManagerList();
         Destroy(gameObject);
     }
+    private void SpawnBubblePop()
+    {
+        Instantiate(bubblePopPrefab_Ref, transform.position, Quaternion.identity);
+    }
+    private Vector2 GetDirection()
+    {
+        if (isMovingLeft)
+        {
+            return Vector2.left;
+        }
+        else
+        {
+            return Vector2.right;
+        }
+    }
+    private bool SpriteSwitchTracker()
+    {
+       
+        if(spriteSwitchTracker >= spriteSwitchTimeInterval)
+        {
+            spriteSwitchTracker = 0;
+            return true;
+        }
+        else
+        {
+            spriteSwitchTracker += Time.deltaTime;
+            return false;
+        }
+    }
+    private void ChangeSpriteAnimation()
+    {
+        if (SpriteSwitchTracker())
+        {
+            if(mySpriteRenderer.sprite == movingBubbleSprite01_Ref)
+            {
+                mySpriteRenderer.sprite = movingBubbleSprite02_Ref;
+            }
+            else
+            {
+                mySpriteRenderer.sprite = movingBubbleSprite01_Ref;
+            }
+
+            FlipSpriteRenderer();
+        }
+    }
+    private void FlipSpriteRenderer()
+    {
+        if (!isMovingLeft)
+        {
+            mySpriteRenderer.flipX = true;
+        }
+    }
+
+    //properties
+    public float DifficultyMultiplier { set { difficultyMultiplier = value; } }
+    public Sprite FloatBubbleSprite_Ref { set { floatBubbleSprite_Ref = value; } }
+    public Sprite MovingBubbleSprite01_Ref { set { movingBubbleSprite01_Ref = value; } }
+    public Sprite MovingBubbleSprite02_Ref { set { movingBubbleSprite02_Ref = value; } }
 }

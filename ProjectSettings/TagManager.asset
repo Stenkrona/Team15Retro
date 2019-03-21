@@ -8,6 +8,8 @@ TagManager:
   - block2
   - block
   - block1
+  - blockz
+  - blockt
   layers:
   - Default
   - TransparentFX

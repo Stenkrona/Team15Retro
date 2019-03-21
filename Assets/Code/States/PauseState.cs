@@ -32,7 +32,7 @@ public class PauseState : IStateBase
    }
    public void PlayerInput()
    {
-       if(Input.GetKeyUp(KeyCode.Escape)){
+       if(Input.GetKeyDown(KeyCode.Escape)){
             gameStateMachine.ChangeState(new PlayState(gameStateMachine, false));
              gameStateMachine.TurnOnCanvasSection(2);
        }

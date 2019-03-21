@@ -15,6 +15,12 @@ public class BubbleManager : MonoBehaviour
     public int maxBubblesInPlay;
     public float minLengthTweenYValues;
     public bool alternateSpawningSide;
+    public float difficultyMultiplierInterval;
+    public GameObject bubblePopPrefab_Ref;
+    public int bubblePenaltyCap;
+    public int peneltyBubblesAmount;
+    public Sprite[] playerOneBubbleSprites;
+    public Sprite[] playerTwoBubbleSprites;
 
     [Header("Bubble Properties")]
     public GameObject bubblePrefab_Ref;
@@ -42,6 +48,12 @@ public class BubbleManager : MonoBehaviour
     private bool isSpawningRightSide;
     private float deSpawnZone;
     private bool hasSpawnedLeftSide;
+
+    private float playerOneDifficultyMultiplier;
+    private float playerTwoDifficultyMultiplier;
+
+    private int playerOnePeneltyTracker;
+    private int playerTwoPeneltyTracker;
 
     public static BubbleManager GetInstance()
     {
@@ -79,6 +91,9 @@ public class BubbleManager : MonoBehaviour
         if (noSpawnUpperBuffer == 0) noSpawnUpperBuffer = 1;
         if (noSpawnLowerBuffer == 0) noSpawnLowerBuffer = 1;
         if (minLengthTweenYValues == 0) minLengthTweenYValues = 1;
+        if (difficultyMultiplierInterval == 0) difficultyMultiplierInterval = 0.2f;
+        if (peneltyBubblesAmount == 0) peneltyBubblesAmount = 3;
+        if (bubblePenaltyCap == 0) bubblePenaltyCap = 3;
        
     }
 
@@ -190,17 +205,26 @@ public class BubbleManager : MonoBehaviour
             tempBubble_Ref.gameStateMachine_Ref = gameStateMachine_Ref;
             tempBubble_Ref.movementSpeed = bubbleMovementSpeed;
             tempBubble_Ref.elevationSpeed = bubbleElevationSpeed;
+            tempBubble_Ref.bubblePopPrefab_Ref = bubblePopPrefab_Ref;
 
             if (playerOneSide)
             {
                 bubblesOnPlayerOnesSide.Add(tempBubbleGameObjcet);
                 tempBubble_Ref.isOnPlayerOneSide = true;
+                tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(true);
+                tempBubble_Ref.FloatBubbleSprite_Ref = playerOneBubbleSprites[0];
+                tempBubble_Ref.MovingBubbleSprite01_Ref = playerOneBubbleSprites[1];
+                tempBubble_Ref.MovingBubbleSprite02_Ref = playerOneBubbleSprites[2];
 
 
             }
             else
             {
                 bubblesOnPlayerTwosSide.Add(tempBubbleGameObjcet);
+                tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(false);
+                tempBubble_Ref.FloatBubbleSprite_Ref = playerTwoBubbleSprites[0];
+                tempBubble_Ref.MovingBubbleSprite01_Ref = playerTwoBubbleSprites[1];
+                tempBubble_Ref.MovingBubbleSprite02_Ref = playerTwoBubbleSprites[2];
             }
         }
         else
@@ -298,6 +322,11 @@ public class BubbleManager : MonoBehaviour
             yValue = p1_LeftBottom.y + noSpawnLowerBuffer;
             return new Vector2(xValue, yValue);
         }
+        else if(v.y > p1_LeftTop.y - noSpawnUpperBuffer)
+        {
+            yValue = p1_LeftBottom.y - noSpawnUpperBuffer;
+            return new Vector2(xValue, yValue);
+        }        
         else
         {
             return v;
@@ -409,7 +438,70 @@ public class BubbleManager : MonoBehaviour
         bubblesOnPlayerTwosSide = new List<GameObject>();
 
     }
-    
+    public float GetDifficultyMultiplier(bool playerOne)
+    {
+        if (playerOne)
+        {
+            return (1.0f + (float)gameStateMachine_Ref.PlayerOneBlocksLanded)
+                * 0.2f;
+        }
+        else
+        {
+            return (1.0f + (float)gameStateMachine_Ref.PlayerTwoBlocksLanded)
+               * 0.2f;
+        }
+    }
+    public void AddPeneltyPoint(bool isPlayerOne)
+    {
+        if (isPlayerOne)
+        {
+            playerOnePeneltyTracker++;
+            CheckIfCapIsReached(true);
+        }
+        else
+        {
+            playerTwoPeneltyTracker++;
+            CheckIfCapIsReached(false);
+        }
+    }
+    private void CheckIfCapIsReached(bool isPlayerOne)
+    {
+        if (isPlayerOne)
+        {
+            if (playerOnePeneltyTracker >= bubblePenaltyCap)
+            {
+                SpawnBubblePenelty(true);
+                playerOnePeneltyTracker = 0;
+            }
+        }
+        else
+        {
+            if(playerTwoPeneltyTracker >= bubblePenaltyCap)
+            {
+                SpawnBubblePenelty(false);
+                playerTwoPeneltyTracker = 0;
+            }
+        }
+    }
+    private void SpawnBubblePenelty(bool forPlayerOne)
+    {
+        Debug.Log("BubblePenelty!! for: " + forPlayerOne);
+
+        for (int i = 0; i < peneltyBubblesAmount; i++)
+        {
+
+            if (forPlayerOne)
+            {
+                SpawnBubble(GetRandomSpawnPosition(true), true);
+            }
+            else
+            {
+                SpawnBubble(GetRandomSpawnPosition(false), false);
+            }
+        }
+    }
+
+
     //properties
     public List<GameObject> BubblesOnPlayerOnesSide
     { get { return bubblesOnPlayerOnesSide; }

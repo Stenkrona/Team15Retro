@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CollisionTrigger : MonoBehaviour
+public class Lander_I : MonoBehaviour
 {
     ParticleSystem particleCrash;
 
@@ -158,5 +158,8 @@ public class CollisionTrigger : MonoBehaviour
             reSpawnCooldownTracker += Time.deltaTime;  
         }
     
-
+    private void poop()
+    {
+        gameStateMachine_Ref.CrashedBlock(amIPlayerOne);
+    }
 }
