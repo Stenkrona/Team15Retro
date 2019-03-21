@@ -59,11 +59,10 @@ public class TestLander : MonoBehaviour
             //Debug.Log(blockRotation.eulerAngles.z);
 
             //float zValue = blockRotation.eulerAngles.z;
-
-            if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == BlockType.T)
+          
+            if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == blockTypeIWant)
             {
-
-                if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
+                    if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
                 {
                     Debug.Log("Win!");
                     SpawnNextAndKillBlock(collision);
@@ -76,6 +75,8 @@ public class TestLander : MonoBehaviour
 
                 else
                 {
+                   
+
                     Debug.Log("Right block, wrong rotation!");
                     RespawnBlock(collision);
                 }
@@ -85,6 +86,7 @@ public class TestLander : MonoBehaviour
 
             else
             {
+                Debug.Log(collision.gameObject.name);
                 Debug.Log("Wrong block!");
                 RespawnBlock(collision);
             }
