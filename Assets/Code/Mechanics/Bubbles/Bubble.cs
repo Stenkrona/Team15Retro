@@ -87,12 +87,12 @@ public class Bubble : MonoBehaviour
 
     private void CheckDeSpawn()
     {
-        if (isMovingLeft && transform.position.x - .35 < myDeSpawnValue)
+        if (isMovingLeft && transform.position.x - .5 < myDeSpawnValue)
         {
             RemoveMeFromBubbleManagerList();
             Destroy(gameObject);
         }
-        else if(!isMovingLeft && transform.position.x + .35 > myDeSpawnValue)
+        else if(!isMovingLeft && transform.position.x + .5 > myDeSpawnValue)
         {
             RemoveMeFromBubbleManagerList();
             Destroy(gameObject);

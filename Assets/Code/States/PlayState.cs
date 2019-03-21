@@ -124,6 +124,12 @@ public class PlayState : IStateBase
 
             Gameboard.GetInstance().GetAndSortLanders();
             Gameboard.GetInstance().SetFullDistances();
+
+            Gameboard.GetInstance().SpawnerOneSpawnPosition = 
+                gameStateMachine.playerOneSpawnPosition;
+
+            Gameboard.GetInstance().SpawnerTwoSpawnPosition =
+                gameStateMachine.playerTwoSpawnPosition;
             
 
             hasShownMessage = true;
