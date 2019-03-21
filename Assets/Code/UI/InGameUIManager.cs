@@ -167,6 +167,9 @@ public class InGameUIManager : MonoBehaviour
     public PrintText PlayerOnePrintText_Ref { get { return playerOnePrintText_Ref; }
         set { playerOnePrintText_Ref = value; } }
     public PrintText PlayerTwoPrintText_Ref { get { return playerTwoPrintText_Ref; }
-        set { playerTwoPrintText_Ref = value; }
-    }
+        set { playerTwoPrintText_Ref = value; }}
+    public PlayerInfoUI PlayerOneInfo_Ref { get { return playerOneInfo_Ref; }
+        set { playerOneInfo_Ref = value; } }
+    public PlayerInfoUI PlayerTwoInfo_Ref { get { return playerTwoInfo_Ref; }
+        set { playerTwoInfo_Ref = value; } }
 }

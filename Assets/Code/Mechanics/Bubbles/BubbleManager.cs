@@ -17,6 +17,10 @@ public class BubbleManager : MonoBehaviour
     public bool alternateSpawningSide;
     public float difficultyMultiplierInterval;
     public GameObject bubblePopPrefab_Ref;
+    public int bubblePenaltyCap;
+    public int peneltyBubblesAmount;
+    public Sprite[] playerOneBubbleSprites;
+    public Sprite[] playerTwoBubbleSprites;
 
     [Header("Bubble Properties")]
     public GameObject bubblePrefab_Ref;
@@ -47,6 +51,9 @@ public class BubbleManager : MonoBehaviour
 
     private float playerOneDifficultyMultiplier;
     private float playerTwoDifficultyMultiplier;
+
+    private int playerOnePeneltyTracker;
+    private int playerTwoPeneltyTracker;
 
     public static BubbleManager GetInstance()
     {
@@ -85,6 +92,8 @@ public class BubbleManager : MonoBehaviour
         if (noSpawnLowerBuffer == 0) noSpawnLowerBuffer = 1;
         if (minLengthTweenYValues == 0) minLengthTweenYValues = 1;
         if (difficultyMultiplierInterval == 0) difficultyMultiplierInterval = 0.2f;
+        if (peneltyBubblesAmount == 0) peneltyBubblesAmount = 3;
+        if (bubblePenaltyCap == 0) bubblePenaltyCap = 3;
        
     }
 
@@ -203,6 +212,9 @@ public class BubbleManager : MonoBehaviour
                 bubblesOnPlayerOnesSide.Add(tempBubbleGameObjcet);
                 tempBubble_Ref.isOnPlayerOneSide = true;
                 tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(true);
+                tempBubble_Ref.FloatBubbleSprite_Ref = playerOneBubbleSprites[0];
+                tempBubble_Ref.MovingBubbleSprite01_Ref = playerOneBubbleSprites[1];
+                tempBubble_Ref.MovingBubbleSprite02_Ref = playerOneBubbleSprites[2];
 
 
             }
@@ -210,6 +222,9 @@ public class BubbleManager : MonoBehaviour
             {
                 bubblesOnPlayerTwosSide.Add(tempBubbleGameObjcet);
                 tempBubble_Ref.DifficultyMultiplier = GetDifficultyMultiplier(false);
+                tempBubble_Ref.FloatBubbleSprite_Ref = playerTwoBubbleSprites[0];
+                tempBubble_Ref.MovingBubbleSprite01_Ref = playerTwoBubbleSprites[1];
+                tempBubble_Ref.MovingBubbleSprite02_Ref = playerTwoBubbleSprites[2];
             }
         }
         else
@@ -307,6 +322,11 @@ public class BubbleManager : MonoBehaviour
             yValue = p1_LeftBottom.y + noSpawnLowerBuffer;
             return new Vector2(xValue, yValue);
         }
+        else if(v.y > p1_LeftTop.y - noSpawnUpperBuffer)
+        {
+            yValue = p1_LeftBottom.y - noSpawnUpperBuffer;
+            return new Vector2(xValue, yValue);
+        }        
         else
         {
             return v;
@@ -429,6 +449,55 @@ public class BubbleManager : MonoBehaviour
         {
             return (1.0f + (float)gameStateMachine_Ref.PlayerTwoBlocksLanded)
                * 0.2f;
+        }
+    }
+    public void AddPeneltyPoint(bool isPlayerOne)
+    {
+        if (isPlayerOne)
+        {
+            playerOnePeneltyTracker++;
+            CheckIfCapIsReached(true);
+        }
+        else
+        {
+            playerTwoPeneltyTracker++;
+            CheckIfCapIsReached(false);
+        }
+    }
+    private void CheckIfCapIsReached(bool isPlayerOne)
+    {
+        if (isPlayerOne)
+        {
+            if (playerOnePeneltyTracker >= bubblePenaltyCap)
+            {
+                SpawnBubblePenelty(true);
+                playerOnePeneltyTracker = 0;
+            }
+        }
+        else
+        {
+            if(playerTwoPeneltyTracker >= bubblePenaltyCap)
+            {
+                SpawnBubblePenelty(false);
+                playerTwoPeneltyTracker = 0;
+            }
+        }
+    }
+    private void SpawnBubblePenelty(bool forPlayerOne)
+    {
+        Debug.Log("BubblePenelty!! for: " + forPlayerOne);
+
+        for (int i = 0; i < peneltyBubblesAmount; i++)
+        {
+
+            if (forPlayerOne)
+            {
+                SpawnBubble(GetRandomSpawnPosition(true), true);
+            }
+            else
+            {
+                SpawnBubble(GetRandomSpawnPosition(false), false);
+            }
         }
     }
 

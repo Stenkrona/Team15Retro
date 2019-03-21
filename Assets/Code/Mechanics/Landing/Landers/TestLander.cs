@@ -7,6 +7,8 @@ public class TestLander : MonoBehaviour
 
     ParticleSystem particleCrash;
 
+    public BlockType blockTypeIWant;
+
     private GameStateMachine gameStateMachine_Ref;
     private bool amIPlayerOne;
     private Spawner mySpawner_Ref;
