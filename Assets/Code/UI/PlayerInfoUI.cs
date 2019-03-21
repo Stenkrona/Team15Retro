@@ -54,7 +54,7 @@ public class PlayerInfoUI : MonoBehaviour
     }
     void OnEnable()
     {
-        SetReferences();
+       // SetReferences();
     }
 
     private void SetReferences()
@@ -64,10 +64,12 @@ public class PlayerInfoUI : MonoBehaviour
         if (amIPlayerOne)
         {
             playerPortraitDisplay.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
+            InGameUIManager.GetInstance().PlayerOneInfo_Ref = this;
         }
         else
         {
             playerPortraitDisplay.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
+            InGameUIManager.GetInstance().PlayerTwoInfo_Ref = this;
         }
 
         if (playerNameDisplay == null)
