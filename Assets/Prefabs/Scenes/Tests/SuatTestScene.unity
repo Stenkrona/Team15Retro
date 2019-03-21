@@ -201,6 +201,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 416089355}
     m_Modifications:
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: LeftParticleThruster
+      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -271,11 +276,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: LeftParticleThruster
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!1001 &269516378
@@ -285,6 +285,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 416089355}
     m_Modifications:
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: DownParticleThruster
+      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -355,11 +360,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: DownParticleThruster
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
 --- !u!1 &416089352 stripped
@@ -400,6 +400,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 416089355}
     m_Modifications:
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: UpParticleThruster
+      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -469,11 +474,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: UpParticleThruster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
@@ -553,6 +553,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 416089355}
     m_Modifications:
+    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
+        type: 3}
+      propertyPath: m_Name
+      value: RightParticleThruster
+      objectReference: {fileID: 0}
     - target: {fileID: 8690578721345039704, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -622,11 +627,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8690578721345039685, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3,
-        type: 3}
-      propertyPath: m_Name
-      value: RightParticleThruster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c3b9fdd83bf6e488cb31fd1fe71db3, type: 3}
