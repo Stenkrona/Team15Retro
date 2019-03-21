@@ -8,6 +8,8 @@ public enum BlockType {I = 0, J = 1, L = 2, O = 3, S = 4, T = 5, Z = 6}
 
 public class GameStateMachine : MonoBehaviour
 {
+    [Header("Developer Mode")]
+    public bool devMode;
 
     [Header("Needed References")]
     public GameObject canvas_Ref;
@@ -37,6 +39,7 @@ public class GameStateMachine : MonoBehaviour
 
 
     private static GameStateMachine gameStateMachine_Ref;
+    private Gameboard gameboard_Ref;
 
     private Text debugTxtReference;
     private string currentState;
@@ -78,9 +81,17 @@ public class GameStateMachine : MonoBehaviour
             Destroy(this);
         }
 
-        isFirstGame = true;
+       gameboard_Ref = Gameboard.GetInstance();
 
-        portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+        isFirstGame = true;
+        if (devMode)
+        {
+            portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+        }
+        else
+        {
+            portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite)); 
+        }
         gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
         introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
         victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
@@ -201,7 +212,11 @@ public class GameStateMachine : MonoBehaviour
 
             float middleX = Mathf.Abs((topLeftX - topRightX) / 2) - topRightX;
 
-            return new Vector2(middleX * -1, bubbleManager_Ref.p2_LeftTop.y);
+            Vector2 vectorToReturn = new Vector2(middleX * -1, bubbleManager_Ref.p2_LeftTop.y);
+
+            gameboard_Ref.SpawnerOneSpawnPosition = vectorToReturn;
+
+            return vectorToReturn;
         }
         else
         {
@@ -210,12 +225,23 @@ public class GameStateMachine : MonoBehaviour
 
             float middleX = Mathf.Abs((topLeftX - topRightX) / 2) + topLeftX;
 
-            return new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
+            Vector2 vectorToReturn = new Vector2(middleX, bubbleManager_Ref.p2_LeftTop.y);
+
+            gameboard_Ref.SpawnerTwoSpawnPosition = vectorToReturn;
+
+            return vectorToReturn;
         }
     }
     public void CrashedBlock(bool isPlayerOne)
     {
-
+        if (isPlayerOne)
+        {
+            bubbleManager_Ref.AddPeneltyPoint(true);
+        }
+        else
+        {
+            bubbleManager_Ref.AddPeneltyPoint(false);
+        }
     }
     public bool Collected(bool isPlayerOne, int blockCollected)
     {
@@ -353,7 +379,14 @@ public class GameStateMachine : MonoBehaviour
         //if statemant will refill the arrays that hold portraits and phrases.
         if (gamesPlayed > gamesPlayedBeforeRefill)
         {
-            portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+            if (devMode)
+            {
+                portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+            }
+            else
+            {
+                portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite));
+            }
             gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
             introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
             victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));

@@ -30,6 +30,7 @@ public class PlayState : IStateBase
         }
             canvas_ref = gameStateMachine.Canvas_Ref;
 
+
        
 
         isDisplayingMessage = showMessage;
@@ -81,6 +82,10 @@ public class PlayState : IStateBase
         {
             gameStateMachine.FastWin();
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            gameStateMachine.bubbleManager_Ref.AddPeneltyPoint(true);
+        }
        
 
 
@@ -110,6 +115,16 @@ public class PlayState : IStateBase
             }
 
             gameStateMachine.ToggleSpawners(true);
+
+            Gameboard.GetInstance().PlayerOneSpawner =
+           gameStateMachine.playerOneSpawner_Ref.GetComponent<Spawner>();
+
+            Gameboard.GetInstance().PlayerTwoSpawner =
+                gameStateMachine.playerTwoSpawner_Ref.GetComponent<Spawner>();
+
+            Gameboard.GetInstance().GetAndSortLanders();
+            Gameboard.GetInstance().SetFullDistances();
+            
 
             hasShownMessage = true;
         }
