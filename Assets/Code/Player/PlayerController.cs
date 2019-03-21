@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem downThrusterParticle;
     public ParticleSystem leftThrusterParticle;
     public ParticleSystem rightThrusterParticle;
-    [HideInInspector] public float velocity;
+    [HideInInspector] public float blockSpeed;
 
     private void Start()
     {
@@ -50,8 +50,8 @@ public class PlayerController : MonoBehaviour
             float xAxisValue = Input.GetAxis(input.horizontalAxis);
             playerTransform.Rotate(new Vector3(0, 0, -xAxisValue * rotateSpeed * Time.deltaTime));
         }
-        velocity = playerRigidBody.velocity.magnitude;
-        Debug.Log(velocity);
+        blockSpeed = playerRigidBody.velocity.magnitude;
+        //Debug.Log(blockSpeed);
         
 
     }
