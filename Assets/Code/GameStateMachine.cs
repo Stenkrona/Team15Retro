@@ -150,8 +150,8 @@ public class GameStateMachine : MonoBehaviour
 
         gameState.ShowIt();
 
-        playerOneBlocksCollected = new bool[7];
-        playerTwoBlocksCollected = new bool[7];
+        playerOneBlocksCollected = new bool[3];
+        playerTwoBlocksCollected = new bool[3];
 
        if(gamesPlayedBeforeRefill == 0) { gamesPlayedBeforeRefill = 28; }
         inGameUIManager_Ref.UpdatePlayerStatus(WhoIsInTheLead());
@@ -400,9 +400,9 @@ public class GameStateMachine : MonoBehaviour
         playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
         playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
 
-        playerOneBlocksCollected = new bool[7];
+        playerOneBlocksCollected = new bool[3];
         playerOneBlocksLanded = 0;
-        playerTwoBlocksCollected = new bool[7];
+        playerTwoBlocksCollected = new bool[3];
         playerTwoBlocksLanded = 0;
         gameOver = false;
         playerOneWon = false;

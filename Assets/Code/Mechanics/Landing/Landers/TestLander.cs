@@ -63,7 +63,7 @@ public class TestLander : MonoBehaviour
             if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == BlockType.T)
             {
 
-                if (blockRotation.eulerAngles.z < 2f || blockRotation.eulerAngles.z > 350f)
+                if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f)
                 {
                     Debug.Log("Win!");
                     SpawnNextAndKillBlock(collision);
