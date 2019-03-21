@@ -17,3 +17,4 @@ MonoBehaviour:
   leftThurster: 352
   rightThurster: 351
   horizontalAxis: Joystick1Horizontal
+  exitGame: 336

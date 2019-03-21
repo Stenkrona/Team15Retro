@@ -73,7 +73,8 @@ public class PlayerController : MonoBehaviour
             rightThrusterParticle.Play();
         if (Input.GetKeyUp(input.rightThurster) && rightThrusterParticle.isPlaying)
             rightThrusterParticle.Stop();
-
+        if(Input.GetKey(input.exitGame))
+            Application.Quit();
     }
     private void GetThrusterParticleSystems()
     {

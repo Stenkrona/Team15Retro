@@ -10,4 +10,5 @@ public class PlayerInput : ScriptableObject
     public KeyCode leftThurster;
     public KeyCode rightThurster;
     public string horizontalAxis;
+    public KeyCode exitGame;
 }
