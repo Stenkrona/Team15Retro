@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     GameObject instanceGroup;
 
     private GameObject playerParent;
+    private Quaternion spawnRotation;
 
 
     // Start is called before the first frame update
@@ -49,7 +50,11 @@ public class Spawner : MonoBehaviour
             {
                 instanceGroup = groups[i];
 
-                PlayerController instanceController = Instantiate(groups[i], playerSpawnpoint, Quaternion.identity).AddComponent<PlayerController>();
+                Vector3 temp = new Vector3(0, 0, Random.Range(0, 360));
+
+                spawnRotation = Quaternion.Euler(temp);
+
+                PlayerController instanceController = Instantiate(groups[i], playerSpawnpoint, spawnRotation ).AddComponent<PlayerController>();
 
                 instanceController.input = playerInput;
                 instanceController.thrusterPower = thrustPower;
