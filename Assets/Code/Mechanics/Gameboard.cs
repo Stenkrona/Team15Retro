@@ -244,7 +244,7 @@ public class Gameboard : MonoBehaviour
             float alpha = GetPercentageOfDistance(
                 playerOneDistance, playerOneFullDistances[playerOneLanderTrackedIndexValue]);
 
-            Debug.Log(Mathf.Pow(2, 1 - alpha) - 1);
+            //Debug.Log(Mathf.Pow(2, 1 - alpha) - 1);
 
             return new Color(1, 1, 1, (Mathf.Pow(2, 1 - alpha) - 1));
         }
