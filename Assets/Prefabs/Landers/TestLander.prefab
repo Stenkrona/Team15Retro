@@ -265,4 +265,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a971b39d82f8d478f8a680ff1db9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockTypeIWant: 0
   playerInput: {fileID: 0}

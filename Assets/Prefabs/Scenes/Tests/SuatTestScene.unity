@@ -387,6 +387,7 @@ MonoBehaviour:
   downThrusterParticle: {fileID: 1999988418}
   leftThrusterParticle: {fileID: 1210154920}
   rightThrusterParticle: {fileID: 1913265387}
+  velocity: 0
 --- !u!4 &416089355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6968995434057695312, guid: f176fa514d6ee1f4693eeef25bf2f068,
