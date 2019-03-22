@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9194e1ce6571af1449beb27b96266e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myBlockType: 2
+  myBlockType: 1
 --- !u!1001 &3087397418974237355
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using Assets.Code.Interfaces;
 using UnityEngine.UI;
 
-public enum BlockType {I = 0, J = 1, L = 2, O = 3, S = 4, T = 5, Z = 6}
+public enum BlockType {T = 0, L = 1, Z = 2}
 
 public class GameStateMachine : MonoBehaviour
 {
@@ -150,8 +150,8 @@ public class GameStateMachine : MonoBehaviour
 
         gameState.ShowIt();
 
-        playerOneBlocksCollected = new bool[3];
-        playerTwoBlocksCollected = new bool[3];
+        playerOneBlocksCollected = new bool[playerOneSpawner_Ref.GetComponent<Spawner>().groups.Length];
+        playerTwoBlocksCollected = new bool[playerTwoSpawner_Ref.GetComponent<Spawner>().groups.Length];
 
        if(gamesPlayedBeforeRefill == 0) { gamesPlayedBeforeRefill = 28; }
         inGameUIManager_Ref.UpdatePlayerStatus(WhoIsInTheLead());
@@ -379,7 +379,7 @@ public class GameStateMachine : MonoBehaviour
         
         //when games played are more than the gamesPlayedBeforeRefill this
         //if statemant will refill the arrays that hold portraits and phrases.
-        if (gamesPlayed > gamesPlayedBeforeRefill)
+        if (gamesPlayed > gamesPlayedBeforeRefill || !devMode)
         {
             if (devMode)
             {
@@ -400,9 +400,9 @@ public class GameStateMachine : MonoBehaviour
         playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
         playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
 
-        playerOneBlocksCollected = new bool[3];
+        playerOneBlocksCollected = new bool[playerOneSpawner_Ref.GetComponent<Spawner>().groups.Length];
         playerOneBlocksLanded = 0;
-        playerTwoBlocksCollected = new bool[3];
+        playerTwoBlocksCollected = new bool[playerTwoSpawner_Ref.GetComponent<Spawner>().groups.Length];
         playerTwoBlocksLanded = 0;
         gameOver = false;
         playerOneWon = false;
@@ -435,9 +435,9 @@ public class GameStateMachine : MonoBehaviour
     }
     private void RefillSpawners()
     {
-        if (blockPrefab_Refs.Length == 7)
-        {
-            for (int i = 0; i < 7; i++)
+        
+        
+            for (int i = 0; i < playerOneSpawner_Ref.GetComponent<Spawner>().groups.Length; i++)
             {
                 if (blockPrefab_Refs[i] != null)
                 {
@@ -450,11 +450,8 @@ public class GameStateMachine : MonoBehaviour
                 }
 
             }
-        }
-        else
-        {
-            Debug.Log("blockPrefab_Refs does not have all the references it needs");
-        }
+        
+       
 
         isFirstGame = false;
 
