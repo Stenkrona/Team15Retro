@@ -25,6 +25,12 @@ public class InGameUIManager : MonoBehaviour
     private int playerOneScore;
     private int playerTwoScore;
 
+    [HideInInspector] public PortraitAnimation playerOneUIAnim_Ref;
+    [HideInInspector] public PortraitAnimation playerTwoUIAnim_Ref;
+    [HideInInspector] public PortraitAnimation playerOneIntroUIAnim_Ref;
+    [HideInInspector] public PortraitAnimation playerTwoIntroUIAnim_Ref;
+
+
     public static InGameUIManager GetInstance()
     {
         return inGameUIManager_Ref;
@@ -50,6 +56,9 @@ public class InGameUIManager : MonoBehaviour
 
         playerOneInfo_Ref = gameStateMachine_Ref.playerInfoOne_Ref;
         playerTwoInfo_Ref = gameStateMachine_Ref.playerInfoTwo_Ref;
+
+        playerOneIntroUIAnim_Ref = playerOneIntroTauntImage_Ref.GetComponent<PortraitAnimation>();
+        playerTwoIntroUIAnim_Ref = playerTwoIntroTauntImage_Ref.GetComponent<PortraitAnimation>();
 
        Invoke("FirstUIUpdate", 0.11f);
     }
@@ -89,10 +98,12 @@ public class InGameUIManager : MonoBehaviour
         if(playerOne)
         {
             playerOneCollectedBlocks_Ref.transform.GetChild(blockNumber).gameObject.SetActive(true);
+            playerOneUIAnim_Ref.TurnOnAnimation();
         }
         else
         {
             playerTwoCollectedBlocks_Ref.transform.GetChild(blockNumber).gameObject.SetActive(true);
+            playerTwoUIAnim_Ref.TurnOnAnimation();
         }
         
     }
