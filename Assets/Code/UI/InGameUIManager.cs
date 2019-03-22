@@ -51,7 +51,7 @@ public class InGameUIManager : MonoBehaviour
         playerOneInfo_Ref = gameStateMachine_Ref.playerInfoOne_Ref;
         playerTwoInfo_Ref = gameStateMachine_Ref.playerInfoTwo_Ref;
 
-        FirstUIUpdate();
+       Invoke("FirstUIUpdate", 0.11f);
     }
    
     void OnEnable()
@@ -69,13 +69,18 @@ public class InGameUIManager : MonoBehaviour
         playerOneIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
         playerTwoIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
 
+      
         playerOnePrintText_Ref.ClearMyString();
+
         playerOnePrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[0].MyIntroPhrase;
         playerOnePrintText_Ref.MakeCharArray();
 
         PlayerTwoPrintText_Ref.ClearMyString();
+
         playerTwoPrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[1].MyIntroPhrase;
         PlayerTwoPrintText_Ref.MakeCharArray();
+
+        UpdatePlayerStatus(0);
        
 
     }
@@ -94,7 +99,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void ResetCollectedBlocks()
     {
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < gameStateMachine_Ref.playerOneSpawner_Ref.GetComponent<Spawner>().groups.Length; i++)
         {
             playerOneCollectedBlocks_Ref.transform.GetChild(i).gameObject.SetActive(false);
             playerTwoCollectedBlocks_Ref.transform.GetChild(i).gameObject.SetActive(false);
