@@ -1516,6 +1516,7 @@ GameObject:
   - component: {fileID: 357958102}
   - component: {fileID: 357958104}
   - component: {fileID: 357958103}
+  - component: {fileID: 357958105}
   m_Layer: 5
   m_Name: img_playerTwo
   m_TagString: Untagged
@@ -1579,6 +1580,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357958101}
   m_CullTransparentMesh: 0
+--- !u!114 &357958105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357958101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb17455659620e14eb9afabcafbc7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprites: []
+  playerOne: 0
+  introText: 1
+  victoryScreen: 0
+  isTalking: 0
 --- !u!1 &372064851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,7 +1999,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 0ba935a60f7b2e84cb10f85183314eb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2526,6 +2544,7 @@ GameObject:
   - component: {fileID: 738885480}
   - component: {fileID: 738885482}
   - component: {fileID: 738885481}
+  - component: {fileID: 738885483}
   m_Layer: 5
   m_Name: img_playerOne
   m_TagString: Untagged
@@ -2589,6 +2608,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738885479}
   m_CullTransparentMesh: 0
+--- !u!114 &738885483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738885479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb17455659620e14eb9afabcafbc7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprites: []
+  playerOne: 1
+  introText: 1
+  victoryScreen: 0
+  isTalking: 0
 --- !u!1 &745890481
 GameObject:
   m_ObjectHideFlags: 0
@@ -16124,6 +16160,7 @@ GameObject:
   - component: {fileID: 1246234234}
   - component: {fileID: 1246234236}
   - component: {fileID: 1246234235}
+  - component: {fileID: 1246234237}
   m_Layer: 5
   m_Name: img_portrait
   m_TagString: Untagged
@@ -16187,6 +16224,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246234233}
   m_CullTransparentMesh: 0
+--- !u!114 &1246234237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246234233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb17455659620e14eb9afabcafbc7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprites: []
+  playerOne: 1
+  introText: 0
+  victoryScreen: 0
+  isTalking: 0
 --- !u!1 &1255622388
 GameObject:
   m_ObjectHideFlags: 0
@@ -16198,6 +16252,7 @@ GameObject:
   - component: {fileID: 1255622389}
   - component: {fileID: 1255622391}
   - component: {fileID: 1255622390}
+  - component: {fileID: 1255622392}
   m_Layer: 5
   m_Name: img_portrait
   m_TagString: Untagged
@@ -16261,6 +16316,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255622388}
   m_CullTransparentMesh: 0
+--- !u!114 &1255622392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255622388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb17455659620e14eb9afabcafbc7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprites: []
+  playerOne: 0
+  introText: 0
+  victoryScreen: 0
+  isTalking: 0
 --- !u!1 &1343435309
 GameObject:
   m_ObjectHideFlags: 0
@@ -16319,6 +16391,10 @@ MonoBehaviour:
   playerTwoGamerTagDisplay_Ref: {fileID: 56997875}
   playerOneCollectedBlocks_Ref: {fileID: 183313675}
   playerTwoCollectedBlocks_Ref: {fileID: 372064851}
+  playerOneUIAnim_Ref: {fileID: 0}
+  playerTwoUIAnim_Ref: {fileID: 0}
+  playerOneIntroUIAnim_Ref: {fileID: 0}
+  playerTwoIntroUIAnim_Ref: {fileID: 0}
 --- !u!1 &1349379214
 GameObject:
   m_ObjectHideFlags: 0
@@ -17436,6 +17512,7 @@ GameObject:
   - component: {fileID: 1835217835}
   - component: {fileID: 1835217837}
   - component: {fileID: 1835217836}
+  - component: {fileID: 1835217838}
   m_Layer: 5
   m_Name: img_playerOne
   m_TagString: Untagged
@@ -17499,6 +17576,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835217834}
   m_CullTransparentMesh: 0
+--- !u!114 &1835217838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835217834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb17455659620e14eb9afabcafbc7b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySprites: []
+  playerOne: 0
+  introText: 0
+  victoryScreen: 1
+  isTalking: 0
 --- !u!1 &1849644512
 GameObject:
   m_ObjectHideFlags: 0
