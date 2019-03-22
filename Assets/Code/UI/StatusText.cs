@@ -10,6 +10,10 @@ public class StatusText : MonoBehaviour
     
     void Start()
     {
+        Invoke("SetMyReference", 0.1f);
+    }
+    private void SetMyReference()
+    {
         if (InGameUIManager.GetInstance() != null)
         {
             if (amIPlayerOne)
