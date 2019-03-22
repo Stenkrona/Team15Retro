@@ -70,6 +70,11 @@ public class SkipButton : MonoBehaviour
         {
             GameStateMachine.GetInstance().IntroIsDone = true;
             GameStateMachine.GetInstance().introTauntScreen_Ref.SetActive(false);
+            buttonPressedTimeTracker = 0;
+            buttonPressed = false;
+            currentStringToPrint = "";
+            myText.text = "";
+
                 
         }
     }
