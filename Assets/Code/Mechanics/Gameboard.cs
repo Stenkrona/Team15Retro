@@ -175,6 +175,8 @@ public class Gameboard : MonoBehaviour
                 tempIndex++;
             }
         }
+
+        TurnOffIrrelevantOutlines();
     }
 
     private void GetDistances()
@@ -254,6 +256,23 @@ public class Gameboard : MonoBehaviour
                 playerTwoDistance, playerTwoFullDistances[playerTwoLanderTrackedIndexValue]);
 
             return new Color(1, 1, 1, (Mathf.Pow(2, 1- alpha) - 1));
+        }
+    }
+    private void TurnOffIrrelevantOutlines()
+    {
+        foreach(TestLander lander in playerOneLanders)
+        {
+            if(lander != playerOneLanderTracked)
+            {
+                lander.transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+            }
+        }
+        foreach(TestLander lander in playerTwoLanders)
+        {
+            if(lander != playerTwoLanderTracked)
+            {
+                lander.transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+            }
         }
     }
    
