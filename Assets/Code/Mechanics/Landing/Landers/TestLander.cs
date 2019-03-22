@@ -19,11 +19,15 @@ public class TestLander : MonoBehaviour
     private float reSpawnCooldown;
     private float reSpawnCooldownTracker;
 
+    GameObject thisLander;
+
     private void Awake()
     {
         GameObject tBlock = GameObject.Find("T_Block");
         GameObject lBlock = GameObject.Find("L_Block");
         GameObject iblock = GameObject.Find("I_Block");
+        thisLander = this.gameObject;
+        
     }
 
 
@@ -59,10 +63,10 @@ public class TestLander : MonoBehaviour
             //Debug.Log(blockRotation.eulerAngles.z);
 
             //float zValue = blockRotation.eulerAngles.z;
-          
+
             if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == blockTypeIWant)
             {
-                    if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
+                if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
                 {
                     Debug.Log("Win!");
                     SpawnNextAndKillBlock(collision);
@@ -75,7 +79,7 @@ public class TestLander : MonoBehaviour
 
                 else
                 {
-                   
+
 
                     Debug.Log("Right block, wrong rotation!");
                     RespawnBlock(collision);
@@ -86,9 +90,15 @@ public class TestLander : MonoBehaviour
 
             else
             {
-                Debug.Log(collision.gameObject.name);
+                //Debug.Log(collision.gameObject.name);
                 Debug.Log("Wrong block!");
-                RespawnBlock(collision);
+                //var knockBack = 500;
+                //var knockBackForce = transform.position - thisLander.transform.position;
+
+                //knockBackForce.Normalize();
+                //blockShape.GetComponent<Rigidbody2D>().AddForce(knockBackForce * knockBack);
+
+                //RespawnBlock(collision);
             }
             reSpawnCooldownTracker = 0.0f;
         }
