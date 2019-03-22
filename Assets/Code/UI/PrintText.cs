@@ -45,13 +45,21 @@ public class PrintText : MonoBehaviour
         //Check if I can print right away, if I have to wait for 
         //player one taunt text to print first or if the game is
         //over and I can print at once.
-        if (amIPlayerOne || gameStateMachine_Ref.GameOver) canIPrint = true;
+        if (amIPlayerOne || gameStateMachine_Ref.GameOver)
+        {
+            canIPrint = true;
+            if(inGameUIManager_Ref.playerOneIntroUIAnim_Ref != null)
+                inGameUIManager_Ref.playerOneIntroUIAnim_Ref.isTalking = true;
+        }
+            
+
         if (amIPlayerOne)
         {
             if (inGameUIManager_Ref.PlayerOnePrintText_Ref == null)
             {
                 inGameUIManager_Ref.PlayerOnePrintText_Ref = this;
                 inGameUIManagerRefOfMeIsSet = true;
+               
             }
         }
         else
@@ -94,6 +102,7 @@ public class PrintText : MonoBehaviour
     }
     void OnEnable()
     {
+        if(!GameStateMachine.GetInstance().isFirstGame)
        SetReferencesAndStartValues();
     }
 
@@ -146,10 +155,12 @@ public class PrintText : MonoBehaviour
 
                     if (amIPlayerOne)
                     {
+                        inGameUIManager_Ref.playerOneIntroUIAnim_Ref.isTalking = false;
                         Invoke("ImDone", .7f);
                     }
                     else
                     {
+                        inGameUIManager_Ref.playerTwoIntroUIAnim_Ref.isTalking = false;
                         Invoke("ImDone", 1.4f);
                     }
                 }
@@ -168,8 +179,12 @@ public class PrintText : MonoBehaviour
         {
             if (amIPlayerOne)
             {
-                inGameUIManager_Ref.PlayerTwoPrintText_Ref.canIPrint = true;
-                myString = "";
+                if (!gameStateMachine_Ref.GameOver)
+                {
+                    inGameUIManager_Ref.PlayerTwoPrintText_Ref.canIPrint = true;
+                    inGameUIManager_Ref.playerTwoIntroUIAnim_Ref.isTalking = true;
+                    myString = "";
+                }
             }
             else
             {
