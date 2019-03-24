@@ -52,3 +52,8 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+Assets/Code/UI/WinnerTextFX.cs.meta
+Assets/Code/UI/WinnerTextFX.cs
+Assets/Art/Resources/PositiveReactions.meta
+Assets/Art/Resources/NegativeReactions.meta
+Assets/Characters.meta

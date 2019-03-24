@@ -22,7 +22,7 @@ public class TestLander : MonoBehaviour
     float forceOnWrongBlock = 100f;
 
     GameObject thisLander;
-    public ParticleSystem crashParticle;
+   
 
     private void Awake()
     {
@@ -115,7 +115,7 @@ public class TestLander : MonoBehaviour
 
     public void RespawnBlock (Collision2D collision)
     {
-        crashParticle.Play();
+       
         Destroy(collision.gameObject);
         mySpawner_Ref.SpawnNext();
     }
