@@ -26,6 +26,7 @@ public class GameStateMachine : MonoBehaviour
     public PlayerInfoUI playerInfoTwo_Ref;
     public InGameUIManager inGameUIManager_Ref;
     public GameObject[] blockPrefab_Refs;
+    public GameObject staticObjects_Ref;
 
     public PlayerInput playerOneInput_Ref;
     public PlayerInput playerTwoInput_Ref;
@@ -479,6 +480,14 @@ public class GameStateMachine : MonoBehaviour
         {
             return 0;
         }
+    }
+    public void LoadDevMode()
+    {
+        portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+    }
+    public void LoadShipMode()
+    {
+
     }
 
     // properties

@@ -31,7 +31,7 @@ public class PlayState : IStateBase
             canvas_ref = gameStateMachine.Canvas_Ref;
 
 
-       
+        gameStateMachine_Ref.staticObjects_Ref.SetActive(true); 
 
         isDisplayingMessage = showMessage;
         if (!showMessage)
