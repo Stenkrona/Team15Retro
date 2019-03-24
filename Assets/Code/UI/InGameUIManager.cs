@@ -78,7 +78,7 @@ public class InGameUIManager : MonoBehaviour
         playerOneIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[0].MyPicture;
         playerTwoIntroTauntImage_Ref.sprite = gameStateMachine_Ref.PlayerCharacterArray[1].MyPicture;
 
-      
+      if(playerOnePrintText_Ref != null)
         playerOnePrintText_Ref.ClearMyString();
 
         playerOnePrintText_Ref.myString = gameStateMachine_Ref.PlayerCharacterArray[0].MyIntroPhrase;

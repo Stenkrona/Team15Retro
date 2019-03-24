@@ -31,10 +31,14 @@ public class GameStateMachine : MonoBehaviour
     public PlayerInput playerOneInput_Ref;
     public PlayerInput playerTwoInput_Ref;
 
+    public GameObject disclaimerText;
+    public GameObject enableDevModeText;
+
     [Header("Settings")]
     public bool debugMode;
     public float timeToWaitBeforeScoreScreen;
     public int gamesPlayedBeforeRefill;
+
    
     private IStateBase gameState;
 
@@ -90,10 +94,15 @@ public class GameStateMachine : MonoBehaviour
         if (devMode)
         {
             portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+            if (disclaimerText != null)
+                disclaimerText.SetActive(true);
         }
         else
         {
-            portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite)); 
+            portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite));
+            if (enableDevModeText != null)
+                enableDevModeText.SetActive(true);
+
         }
         gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
         introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
@@ -483,11 +492,33 @@ public class GameStateMachine : MonoBehaviour
     }
     public void LoadDevMode()
     {
+        devMode = true;
+
+        disclaimerText.SetActive(true);
+        enableDevModeText.SetActive(false);
+
         portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
+
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
+
+        inGameUIManager_Ref.UpdatePlayerDisplays();
     }
     public void LoadShipMode()
     {
+        devMode = false;
 
+        disclaimerText.SetActive(false);
+        enableDevModeText.SetActive(true);
+
+        portrait_Refs = portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite));
+
+        playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
+        playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter };
+
+        inGameUIManager_Ref.UpdatePlayerDisplays();
     }
 
     // properties

@@ -53,6 +53,20 @@ public class MainMenuState : IStateBase
             gameStateMachine.ChangeState(new PlayState(gameStateMachine, true));
         }
 
+        if(Input.GetKeyDown(gameStateMachine.playerOneInput_Ref.downThruster) ||
+            Input.GetKeyDown(gameStateMachine.playerTwoInput_Ref.downThruster))
+        {
+            if (gameStateMachine.devMode)
+            {
+                gameStateMachine.LoadShipMode();
+            }
+            else
+            {
+                gameStateMachine.LoadDevMode();
+                Debug.Log("Y");
+            }
+        }
+
     }
     private void TimeTracker()
     {
