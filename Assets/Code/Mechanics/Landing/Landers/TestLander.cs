@@ -19,7 +19,10 @@ public class TestLander : MonoBehaviour
     private float reSpawnCooldown;
     private float reSpawnCooldownTracker;
 
+    float forceOnWrongBlock = 100f;
+
     GameObject thisLander;
+    public ParticleSystem crashParticle;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class TestLander : MonoBehaviour
         GameObject iblock = GameObject.Find("I_Block");
         thisLander = this.gameObject;
         
+
     }
 
 
@@ -68,21 +72,19 @@ public class TestLander : MonoBehaviour
             {
                 if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
                 {
-                    Debug.Log("Win!");
+                    //Debug.Log("Win!");
                     SpawnNextAndKillBlock(collision);
 
                 }
                 else if (blockShape.GetComponent<PlayerController>().blockSpeed > 0.5f)
                 {
-                    Debug.Log("Too fast!");
+                    //Debug.Log("Too fast!");
+                    RespawnBlock(collision);
                 }
 
                 else
                 {
-
-
-                    Debug.Log("Right block, wrong rotation!");
-                    RespawnBlock(collision);
+                    //Debug.Log("Right block, wrong rotation!");
                 }
 
             }
@@ -90,19 +92,14 @@ public class TestLander : MonoBehaviour
 
             else
             {
-                //Debug.Log(collision.gameObject.name);
-                Debug.Log("Wrong block!");
-                //var knockBack = 500;
-                //var knockBackForce = transform.position - thisLander.transform.position;
-
-                //knockBackForce.Normalize();
-                //blockShape.GetComponent<Rigidbody2D>().AddForce(knockBackForce * knockBack);
-
-                //RespawnBlock(collision);
+                //Debug.Log("Wrong block!");
+                blockShape.GetComponent<Rigidbody2D>().AddForce(transform.position * forceOnWrongBlock);
             }
+
             reSpawnCooldownTracker = 0.0f;
         }
     }
+
     private bool AmIOnPlayerOneSide()
     {
         if (transform.position.x < 0)
@@ -118,6 +115,7 @@ public class TestLander : MonoBehaviour
 
     public void RespawnBlock (Collision2D collision)
     {
+        crashParticle.Play();
         Destroy(collision.gameObject);
         mySpawner_Ref.SpawnNext();
     }
@@ -137,6 +135,7 @@ public class TestLander : MonoBehaviour
     {
         reSpawnCooldownTracker += Time.deltaTime;
     }
+
 
 
 }
