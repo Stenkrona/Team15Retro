@@ -80,13 +80,9 @@ public class GameStateMachine : MonoBehaviour
     void Awake()
     {
         if (gameStateMachine_Ref == null)
-        {
             gameStateMachine_Ref = this;
-        }
         else
-        {
             Destroy(this);
-        }
 
        gameboard_Ref = Gameboard.GetInstance();
 
@@ -111,9 +107,8 @@ public class GameStateMachine : MonoBehaviour
         playerOneCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
         playerTwoCharacter = new PlayerCharacter(portrait_Refs, introPhrases, victoryPhrases, gamerTag_Refs);
         playerCharacterArray = new PlayerCharacter[] { playerOneCharacter, playerTwoCharacter};
-
-
     }
+
     void Start()
     {
         gameStateMachine_Ref = this;
@@ -129,7 +124,6 @@ public class GameStateMachine : MonoBehaviour
                 Debug.Log("GameStateMachine is missing a reference to the Canvas");
             }
         }
-
 
         if (gameState == null)
         {
@@ -150,8 +144,7 @@ public class GameStateMachine : MonoBehaviour
 
         if (playerInfoOne_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerOneInfo");
-
-
+        
         if (playerInfoTwo_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
 
@@ -171,11 +164,13 @@ public class GameStateMachine : MonoBehaviour
     {
         gameState.StateUpdate();
     }
+
     public void ChangeState(IStateBase newState)
     {
         gameState = newState;
         gameState.ShowIt();
     }
+
     public void TurnOnCanvasSection(int child)
     {
         //the argument child will be the canvas child index and that child will be set active
@@ -191,10 +186,9 @@ public class GameStateMachine : MonoBehaviour
         canvas_Ref.transform.GetChild(child).gameObject.SetActive(true);
 
     }
+
     public void ToggleSpawners(bool b)
     {
-
-
         if (playerOneSpawner_Ref != null)
         {
             playerOneSpawner_Ref.GetComponent<Spawner>().playerSpawnpoint = FindSpawnPosition(true);
@@ -215,6 +209,7 @@ public class GameStateMachine : MonoBehaviour
             Debug.Log("GameStateMachine is missing a reference to player TWO's spawner!");
         }
     }
+
     private Vector2 FindSpawnPosition(bool playerOneSide)
     {
         if (playerOneSide)
@@ -244,17 +239,15 @@ public class GameStateMachine : MonoBehaviour
             return vectorToReturn;
         }
     }
+
     public void CrashedBlock(bool isPlayerOne)
     {
         if (isPlayerOne)
-        {
             bubbleManager_Ref.AddPeneltyPoint(true);
-        }
         else
-        {
-            bubbleManager_Ref.AddPeneltyPoint(false);
-        }
+            bubbleManager_Ref.AddPeneltyPoint(false)
     }
+
     public bool Collected(bool isPlayerOne, int blockCollected)
     {
 
@@ -275,6 +268,7 @@ public class GameStateMachine : MonoBehaviour
 
         return CheckIfSomeoneWon();
     }
+
     private bool CheckIfSomeoneWon()
     {
         bool playerOneWon = true;
@@ -283,18 +277,13 @@ public class GameStateMachine : MonoBehaviour
         foreach (bool b in playerOneBlocksCollected)
         {
             if (!b)
-            {
-
                 playerOneWon = false; break;
-            }
         }
 
         foreach (bool b in playerTwoBlocksCollected)
         {
             if (!b)
-            {
                 playerTwoWon = false; break;
-            }
         }
 
         if (playerOneWon)
@@ -302,17 +291,15 @@ public class GameStateMachine : MonoBehaviour
             WeHaveAWinner(true);
             return true;
         }
-
         else if (playerTwoWon)
         {
             WeHaveAWinner(false);
             return true;
         }
         else
-        {
             return false;
-        }
     }
+
     private void WeHaveAWinner(bool isPlayerOne)
     {
         if (!gameOver)
@@ -325,64 +312,51 @@ public class GameStateMachine : MonoBehaviour
                 playerOneWon = true;
                 inGameText_Ref.text = "Player One Wins!";
                 inGameText_Ref.transform.parent.gameObject.SetActive(true);
-
-
             }
             else
             {
                 playerOneWon = false;
                 inGameText_Ref.text = "Player Two Wins!";
                 inGameText_Ref.transform.parent.gameObject.SetActive(true);
-
-
             }
         }
 
         Invoke("ChangeToScoreScreen", timeToWaitBeforeScoreScreen);
     }
+
     private void ChangeToScoreScreen()
     {
         bubbleManager_Ref.TurnOff();
         ChangeState(new ScoreScreenState(this));
     }
+
     public void TurnOffIntroTauntScreen()
     {
         introTauntScreen_Ref.SetActive(false);
     }
+
     public void Reset()
     { 
-
-       
-
         gameStateMachine_Ref = this;
 
         if (canvas_Ref == null)
         {
             if (transform.GetChild(0).gameObject != null)
-            {
                 canvas_Ref = transform.GetChild(0).gameObject;
-            }
             else
-            {
                 Debug.Log("GameStateMachine is missing a reference to the Canvas");
-            }
         }
 
         if (bordersParent_Ref == null)
         {
             if (GameObject.Find("BordersParent") != null)
-            {
                 bordersParent_Ref = GameObject.Find("BordersParent");
-            }
             else
-            {
                 Debug.Log("GameStateMachine is missing a reference to BordersParent");
-            }
         }
 
         if (playerInfoOne_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerOneInfo");
-
 
         if (playerInfoTwo_Ref == null)
             Debug.Log("GameStateMachine is missing a reference to playerTwoInfo");
@@ -392,13 +366,10 @@ public class GameStateMachine : MonoBehaviour
         if (gamesPlayed > gamesPlayedBeforeRefill || !devMode)
         {
             if (devMode)
-            {
                 portrait_Refs = Resources.LoadAll("Portraits", typeof(Sprite));
-            }
             else
-            {
                 portrait_Refs = Resources.LoadAll("WitchPortraits", typeof(Sprite));
-            }
+
             gamerTag_Refs = Resources.LoadAll("GamerTags", typeof(TextAsset));
             introPhrases = Resources.LoadAll("IntroPhrases", typeof(TextAsset));
             victoryPhrases = Resources.LoadAll("VictoryPhrases", typeof(TextAsset));
@@ -437,16 +408,15 @@ public class GameStateMachine : MonoBehaviour
             inGameUIManager_Ref = InGameUIManager.GetInstance();
         if (bubbleManager_Ref == null)
             bubbleManager_Ref = BubbleManager.GetInstance();
-
     }
+
     public void FastWin()
     {
         WeHaveAWinner(true);
     }
+
     private void RefillSpawners()
     {
-        
-        
             for (int i = 0; i < playerOneSpawner_Ref.GetComponent<Spawner>().groups.Length; i++)
             {
                 if (blockPrefab_Refs[i] != null)
@@ -455,21 +425,16 @@ public class GameStateMachine : MonoBehaviour
                     playerTwoSpawner_Ref.GetComponent<Spawner>().groups[i] = blockPrefab_Refs[i];
                 }
                 else
-                {
                     Debug.Log("blocksPrefab_Refs with index: " + i + ", does not have a value.");
-                }
-
             }
-        
-       
-
         isFirstGame = false;
-
     }
+
     public void WaitAndChangeToBeginState()
     {
         Invoke("Restart", 3.0f);
     }
+
     private void Restart()
     {
         ChangeState(new BeginState(this));
@@ -478,18 +443,13 @@ public class GameStateMachine : MonoBehaviour
     public int WhoIsInTheLead()
     {
         if(playerOneBlocksLanded > PlayerTwoBlocksLanded)
-        {
             return 1;
-        }
         else if(playerOneBlocksLanded < PlayerTwoBlocksLanded)
-        {
             return 2;
-        }
         else
-        {
             return 0;
-        }
     }
+
     public void LoadDevMode()
     {
         devMode = true;
@@ -505,6 +465,7 @@ public class GameStateMachine : MonoBehaviour
 
         inGameUIManager_Ref.UpdatePlayerDisplays();
     }
+
     public void LoadShipMode()
     {
         devMode = false;
