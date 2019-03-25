@@ -6,12 +6,10 @@ public class Gameboard : MonoBehaviour
 {
     private static Gameboard gameboard_Ref;
     private GameStateMachine gameStateMachine_Ref;
-
-
+    
     private List<TestLander> playerOneLanders;
     private List<TestLander> playerTwoLanders;
    
-
     [HideInInspector] public GameObject playerOneBlock_Ref;
     [HideInInspector] public GameObject playerTwoBlock_Ref;
     public Color playerOneOutlineColor;
@@ -34,48 +32,33 @@ public class Gameboard : MonoBehaviour
 
     private Vector2 spawnerOneSpawnPosition;
     private Vector2 spawnerTwoSpawnPosition;
-
     
-
     void Awake()
     {
         if(gameboard_Ref == null)
-        {
             gameboard_Ref = this;
-        }
         else
-        {
             Destroy(this);
-        }
-
     }
-
     
     void Start()
     {
-
         gameStateMachine_Ref = GameStateMachine.GetInstance();
         playerOneFullDistances = new float[3];
         playerTwoFullDistances = new float[3];
         playerOneLanders = new List<TestLander>();
         playerTwoLanders = new List<TestLander>();
-     
-
-      //  GetAndSortLanders();
-       
-      
     }
 
     public static Gameboard GetInstance()
     {
         return gameboard_Ref;
     }
+
     void Update()
     {
         if (gameStateMachine_Ref.IntroIsDone)
         {
-
-
             GetDistances();
 
             playerOneOutlineColor = SetAlpha(true);
@@ -92,42 +75,28 @@ public class Gameboard : MonoBehaviour
                     playerTwoOutlineColor;
             }
         }
-      
     }
-
 
     public void AddLanderToList(bool playerOne, TestLander lander)
     {
         if (playerOne)
-        {
             playerOneLanders.Add(lander);
-        }
         else
-        {
             playerTwoLanders.Add(lander);
-        }
     }
 
-
-    
     public void GetAndSortLanders()
     {
         if (GameObject.FindObjectsOfType<TestLander>() != null)
         {
-
-
             TestLander[] landers = GameObject.FindObjectsOfType<TestLander>();
 
             foreach (TestLander lander in landers)
             {
                 if (lander.transform.position.x < 0)
-                {
                     playerOneLanders.Add(lander);
-                }
                 else if (lander.transform.position.x > 0)
-                {
                     playerTwoLanders.Add(lander);
-                }
             }
         }
     }
@@ -141,9 +110,7 @@ public class Gameboard : MonoBehaviour
         if (playerOne)
         {
             playerOneBlock_Ref = block;
-
             
-
             foreach(TestLander lander in playerOneLanders)
             {
                 if(lander.blockTypeIWant == blockType.myBlockType)
@@ -153,7 +120,6 @@ public class Gameboard : MonoBehaviour
 
                     break;
                 }
-
                 tempIndex++;
             }
         }
@@ -166,16 +132,13 @@ public class Gameboard : MonoBehaviour
                 if(lander.blockTypeIWant == blockType.myBlockType)
                 {
                     playerTwoLanderTracked = lander;
-
                     playerTwoLanderTrackedIndexValue = tempIndex;
 
                     break;
                 }
-
                 tempIndex++;
             }
         }
-
         TurnOffIrrelevantOutlines();
     }
 
@@ -197,28 +160,20 @@ public class Gameboard : MonoBehaviour
     {
         if (GameObject.FindObjectsOfType<Spawner>() != null)
         {
-
             Spawner[] spawners = GameObject.FindObjectsOfType<Spawner>();
 
             foreach (Spawner s in spawners)
             {
                 if (s.playerSpawnpoint.x < 0)
-                {
                     playerOneSpawner = s;
-                }
                 else
-                {
                     playerTwoSpawner = s;
-                }
             }
         }
-
     }
 
     public void SetFullDistances()
     {
-      
-
         playerOneFullDistances[0] = Mathf.Abs(Vector2.Distance(
             playerOneLanders[0].transform.position, spawnerOneSpawnPosition));
         playerOneFullDistances[1] = Mathf.Abs(Vector2.Distance(
@@ -232,13 +187,13 @@ public class Gameboard : MonoBehaviour
             playerTwoLanders[1].transform.position, spawnerTwoSpawnPosition));
         playerTwoFullDistances[2] = Mathf.Abs(Vector2.Distance(
             playerTwoLanders[2].transform.position, spawnerTwoSpawnPosition));
-
     }
 
     private float GetPercentageOfDistance(float currentDistance, float fullDistance)
     {
         return currentDistance / fullDistance;
     }
+
     private Color SetAlpha(bool playerOne)
     {
         if (playerOne)
@@ -258,26 +213,20 @@ public class Gameboard : MonoBehaviour
             return new Color(1, 1, 1, (Mathf.Pow(2, 1- alpha) - 1));
         }
     }
+
     private void TurnOffIrrelevantOutlines()
     {
         foreach(TestLander lander in playerOneLanders)
         {
             if(lander != playerOneLanderTracked)
-            {
                 lander.transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-            }
         }
         foreach(TestLander lander in playerTwoLanders)
         {
             if(lander != playerTwoLanderTracked)
-            {
                 lander.transform.GetChild(1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
-            }
         }
     }
-   
-    
-  
 
     //Properties
     public Spawner PlayerOneSpawner { set { playerOneSpawner = value; } }
