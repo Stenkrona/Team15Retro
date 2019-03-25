@@ -7,15 +7,14 @@ public class TestLander : MonoBehaviour
 
     ParticleSystem particleCrash;
 
+    [Header("Testing Player Input")]
+    public PlayerInput playerInput;
     public BlockType blockTypeIWant;
 
     private GameStateMachine gameStateMachine_Ref;
     private bool amIPlayerOne;
     private Spawner mySpawner_Ref;
-
-    [Header("Testing Player Input")]
-    public PlayerInput playerInput;
-
+    
     private float reSpawnCooldown;
     private float reSpawnCooldownTracker;
 
@@ -23,18 +22,13 @@ public class TestLander : MonoBehaviour
 
     GameObject thisLander;
    
-
     private void Awake()
     {
         GameObject tBlock = GameObject.Find("T_Block");
         GameObject lBlock = GameObject.Find("L_Block");
         GameObject iblock = GameObject.Find("I_Block");
         thisLander = this.gameObject;
-        
-
     }
-
-
 
     void Start()
     {
@@ -42,13 +36,9 @@ public class TestLander : MonoBehaviour
         gameStateMachine_Ref = GameStateMachine.GetInstance();
 
         if (amIPlayerOne)
-        {
             mySpawner_Ref = gameStateMachine_Ref.playerOneSpawner_Ref.GetComponent<Spawner>();
-        }
         else
-        {
             mySpawner_Ref = gameStateMachine_Ref.playerTwoSpawner_Ref.GetComponent<Spawner>();
-        }
 
         reSpawnCooldown = 0.1f;
     }
@@ -64,37 +54,16 @@ public class TestLander : MonoBehaviour
         {
             GameObject blockShape = collision.gameObject;
             Quaternion blockRotation = blockShape.transform.rotation;
-            //Debug.Log(blockRotation.eulerAngles.z);
-
-            //float zValue = blockRotation.eulerAngles.z;
 
             if (collision.gameObject.GetComponent<MyBlockType>().myBlockType == blockTypeIWant)
             {
                 if (blockRotation.eulerAngles.z < 10f || blockRotation.eulerAngles.z > 350f && blockShape.GetComponent<PlayerController>().blockSpeed < 0.5f)
-                {
-                    //Debug.Log("Win!");
                     SpawnNextAndKillBlock(collision);
-
-                }
                 else if (blockShape.GetComponent<PlayerController>().blockSpeed > 0.5f)
-                {
-                    //Debug.Log("Too fast!");
                     RespawnBlock(collision);
-                }
-
-                else
-                {
-                    //Debug.Log("Right block, wrong rotation!");
-                }
-
             }
-
-
             else
-            {
-                //Debug.Log("Wrong block!");
                 blockShape.GetComponent<Rigidbody2D>().AddForce(transform.position * forceOnWrongBlock);
-            }
 
             reSpawnCooldownTracker = 0.0f;
         }
@@ -103,39 +72,29 @@ public class TestLander : MonoBehaviour
     private bool AmIOnPlayerOneSide()
     {
         if (transform.position.x < 0)
-        {
             return true;
-        }
         else
-        {
             return false;
-        }
     }
-
 
     public void RespawnBlock (Collision2D collision)
     {
-       
         Destroy(collision.gameObject);
         mySpawner_Ref.SpawnNext();
     }
-
 
     private void SpawnNextAndKillBlock(Collision2D collision)
     {
         mySpawner_Ref.RemoveGroup();
         if (!gameStateMachine_Ref.GameOver)
-        {
             if (!gameStateMachine_Ref.Collected(amIPlayerOne, (int)collision.gameObject.GetComponent<MyBlockType>().myBlockType))
                 mySpawner_Ref.SpawnNext();
-        }
+
         Destroy(collision.gameObject);
     }
+
     private void UpdateCooldownTracker()
     {
         reSpawnCooldownTracker += Time.deltaTime;
     }
-
-
-
 }
