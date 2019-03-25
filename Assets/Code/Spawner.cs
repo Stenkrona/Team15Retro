@@ -20,11 +20,17 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnNext();
+        if (groups.Length == 0)
+        {
+            Debug.Log("The Groups array has not been properly set up");
+            return;
+        }
+            SpawnNext();
     }
 
     public void RemoveGroup()
     {
+
         for(int i = 0; i<groups.Length;i++ )
         {
             if(instanceGroup == groups[i])
@@ -67,6 +73,7 @@ public class Spawner : MonoBehaviour
             }
         
     }
+
     public void RemoveRemainingBlocks()
     {
         int limit = transform.parent.childCount;
