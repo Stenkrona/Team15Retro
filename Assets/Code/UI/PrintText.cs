@@ -32,13 +32,10 @@ public class PrintText : MonoBehaviour
     {
         gameStateMachine_Ref = GameStateMachine.GetInstance();
         if (GetComponent<Text>() != null)
-        {
             myText = GetComponent<Text>();
-        }
         else
-        {
             Debug.Log("PrintText can't get a Text reference for the variable myText");
-        }
+
         if (inGameUIManager_Ref == null)
             inGameUIManager_Ref = InGameUIManager.GetInstance();
 
@@ -59,13 +56,18 @@ public class PrintText : MonoBehaviour
             {
                 inGameUIManager_Ref.PlayerOnePrintText_Ref = this;
                 inGameUIManagerRefOfMeIsSet = true;
-               
             }
         }
         else
         {
-           
-
+            if (inGameUIManager_Ref != null)
+            {
+                inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
+                inGameUIManagerRefOfMeIsSet = true;
+            }
+            else
+            {
+                inGameUIManager_Ref = InGameUIManager.GetInstance();
 
                 if (inGameUIManager_Ref != null)
                 {
@@ -73,21 +75,8 @@ public class PrintText : MonoBehaviour
                     inGameUIManagerRefOfMeIsSet = true;
                 }
                 else
-                {
-                    inGameUIManager_Ref = InGameUIManager.GetInstance();
-
-                    if (inGameUIManager_Ref != null)
-                    {
-                        inGameUIManager_Ref.PlayerTwoPrintText_Ref = this;
-                        inGameUIManagerRefOfMeIsSet = true;
-                    }
-                    else
-                    {
-                        Debug.Log("PrintText on: " + gameObject.name + ", is missing a value for inGameUIManager_Ref");
-                    }
-
-                }
-            
+                    Debug.Log("PrintText on: " + gameObject.name + ", is missing a value for inGameUIManager_Ref");
+            }           
         }
 
         charArrayIndex = 0;
@@ -95,11 +84,11 @@ public class PrintText : MonoBehaviour
         currentStringToDisplay = "";
     }
    
-   
     void Start()
     {
         SetReferencesAndStartValues();
     }
+
     void OnEnable()
     {
         if(!GameStateMachine.GetInstance().isFirstGame)
@@ -116,6 +105,7 @@ public class PrintText : MonoBehaviour
         charArray = myString.ToCharArray();
         charArrayIndex = 0;
     }
+
     private bool PrintSpeedGate()
     {
         printSpeedTracker += Time.deltaTime;
@@ -124,21 +114,19 @@ public class PrintText : MonoBehaviour
         {
             printSpeedTracker = 0;
             return true;
-
         }
         else
         {
             return false;
         }
     }
+
     private void PrintLetters()
     {
         if (canIPrint)
         {
             if (charArray != null && PrintSpeedGate() && charArrayIndex < charArray.Length)
             {
-
-
                 currentStringToDisplay = currentStringToDisplay + charArray[charArrayIndex];
 
                 myText.text = currentStringToDisplay;
@@ -152,7 +140,6 @@ public class PrintText : MonoBehaviour
 
                 if (!gameStateMachine_Ref.GameOver)
                 { 
-
                     if (amIPlayerOne)
                     {
                         inGameUIManager_Ref.playerOneIntroUIAnim_Ref.isTalking = false;
@@ -168,11 +155,10 @@ public class PrintText : MonoBehaviour
                 {
                     gameStateMachine_Ref.WaitAndChangeToBeginState();
                 }
-
             }
         }
-
     }
+
     private void ImDone()
     {
         if (!gameStateMachine_Ref.GameOver)
@@ -198,6 +184,7 @@ public class PrintText : MonoBehaviour
             gameStateMachine_Ref.ChangeState(new BeginState(gameStateMachine_Ref));
         }
     }
+
     private void SetMeAsReferenceToInGameUIManager()
     {
         if (!inGameUIManagerRefOfMeIsSet)
@@ -226,22 +213,20 @@ public class PrintText : MonoBehaviour
                         inGameUIManagerRefOfMeIsSet = true;
                     }
                     else
-                    {
                         Debug.Log("PrintText on: " + gameObject.name + ", is missing a value for inGameUIManager_Ref");
-                    }
 
                 }
 
             }
         }
     }
+
     public void ClearMyString()
     {
         myText.text = "";
         
         currentStringToDisplay = "";
     }
-  
 
     public bool IsFullMessageShown { get { return isFullMessageShown; } }
 }
